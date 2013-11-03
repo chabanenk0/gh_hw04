@@ -1,0 +1,11 @@
+_first:
+    pattern: /first/
+    defaults: { _controller: AcmeDemoBundle:My:first }
+
+_second:
+    pattern: /second/
+    defaults: { _controller: AcmeDemoBundle:My:second }
+
+_third:
+    pattern: /third/
+    defaults: { _controller: AcmeDemoBundle:My:third }
