@@ -12,6 +12,7 @@ composer update
 
 3) Add virtual host to Your apache2 configuration. Edit a file /etc/apache2/sites-available/default and add the following lines:
 
+<plaintext>
 <VirtualHost *:80>
 <Directory "/$data_dir/symfony/web/sf">
  AllowOverride All
@@ -28,7 +29,7 @@ composer update
    Allow from All
   </Directory>
 </VirtualHost>
-
+</plaintext>
 
 ---------
 Usage:
@@ -37,9 +38,10 @@ Usage:
 
 1) first routing point: /first (displays a simple Responce object)
 
-2) Second routing point: /second (displays th
+2) Second routing point: /second (displays the simple template: html)
 
-You can edit the template's content in the file: ???.html.twig
+You can edit the template's content in the file: src/Acme/DemoBundle/Resources/views/My/second.html.twig
 
 3) Third routing point: /third (displays the template, that extenses the BASE template)
 
+You can edit the template's content in the file: src/Acme/DemoBundle/Resources/views/My/third.html.twig
