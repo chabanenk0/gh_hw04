@@ -59,6 +59,7 @@ assetic:
     bootstrap_less:
         inputs:
             - '%kernel.root_dir%/../vendor/twbs/bootstrap/less/bootstrap.less'
+            - '%kernel.root_dir%/../src/Acme/DemoBundle/Resources/public/css/jumbotron.css'
         filters: [lessphp,cssembed]
 
 # Doctrine Configuration

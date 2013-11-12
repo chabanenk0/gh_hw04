@@ -19,3 +19,4 @@ _acme_demo:
 
 _acme_demo2:
     resource: "@AcmeDemoBundle/Resources/config/myroute.yml"
+

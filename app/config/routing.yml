@@ -1,0 +1,4 @@
+chabanenk0_test_assignment:
+    resource: "@chabanenk0TestAssignmentBundle/Resources/config/routing.yml"
+    prefix:   /
+

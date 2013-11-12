@@ -1,0 +1,7 @@
+parameters:
+#    chabanenk0_test_assignment.example.class: chabanenk0\TestAssignmentBundle\Example
+
+services:
+#    chabanenk0_test_assignment.example:
+#        class: %chabanenk0_test_assignment.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
