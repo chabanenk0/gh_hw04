@@ -1,10 +1,23 @@
-{% extends "AcmeDemoBundle::layout.html.twig" %}
+{% extends "::base.html.twig" %}
 
 {% block title "Hello! " %}
+
+{% block javascripts %}
+{% javascripts '@jquery_js' '@bootstrap_js' filter='?yui_js' combine=true %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{% endblock javascripts %}
+
+{% block stylesheets %}
+  {% stylesheets '@bootstrap_less' combine=true %}
+<link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+{% endstylesheets %}
+{%  endblock stylesheets %}
 
 {% block content %}
     <h1>Hello, everybody!</h1>
 <p>This is the simple Twig's template, that extends the Base one...</p>
 {% endblock %}
+
 
 {% set code = code(_self) %}

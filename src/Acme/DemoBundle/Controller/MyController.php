@@ -9,8 +9,8 @@ use Acme\DemoBundle\Form\ContactType;
 
 // these import the "@Route" and "@Template" annotations
 // using only yaml configuration
-//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class MyController extends Controller
 {
