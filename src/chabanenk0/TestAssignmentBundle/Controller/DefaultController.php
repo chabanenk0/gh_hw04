@@ -35,7 +35,7 @@ class DefaultController extends Controller
 
         if ($form->isValid()) {
             // perform some action, such as saving the task to the database
-            $scalesArray = $testclass->calculateScale($request);
+            $scalesArray = $testclass->calculateScale($form);
             return $this->render("chabanenk0TestAssignmentBundle:Default:scales.html.twig",array('scales'=>$scalesArray ));
         }
 

@@ -48,11 +48,12 @@ class MultiCaseTestQuestion extends AbstractTestQuestion
     }
 
 
-    public function calculateScore($request)
+    public function calculateScore($form)
     {
 
+        $answers=$form->getData();
         foreach ($this->answers as $currentAnswer) {
-            $answer=$request->get("ans".$currentAnswer->getNumber());
+            $answer=$answers["ans".$currentAnswer->getNumber()];
             if ($answer == 'on') {
                 $currentAnswer->calcScores();
             }

@@ -51,9 +51,10 @@ class OneCaseTestQuestion extends AbstractTestQuestion implements AskableInterfa
     }
 
 
-    public function calculateScore($request)
+    public function calculateScore($form)
     {
-        $answer=$request->get("ans".$this->number);
+        $data=$form->getData();
+        $answer=$data["ans".$this->number];
         foreach ($this->answers as $currentAnswer) {
             if ($currentAnswer->getNumber() == $answer) {
                 $currentAnswer->calcScores();
