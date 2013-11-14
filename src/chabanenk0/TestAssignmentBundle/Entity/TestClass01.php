@@ -14,6 +14,7 @@ use chabanenk0\TestAssignmentBundle\Entity\AbstractTestQuestion;
 use chabanenk0\TestAssignmentBundle\Entity\OneCaseTestQuestion;
 use chabanenk0\TestAssignmentBundle\Entity\MultiCaseTestQuestion;
 use chabanenk0\TestAssignmentBundle\Entity\Test;
+use Symfony\Component\HttpFoundation\Request;
 
 
 class TestClass01 {
@@ -56,6 +57,18 @@ class TestClass01 {
         return $form;
     }
 
+    public function calculateScale(Request $request)
+    {
+        $this->test->calculateScales($request);
+        $scales = $this->test->getScales();
+        $scaleScoresArray=array();
+        foreach ($scales as $scale) {
+            $scaleScoresArray[]=$scale->getScore();
+        }
+        return $scaleScoresArray;
+    }
+
+
     public function setTest($test)
     {
         $this->test = $test;
@@ -65,5 +78,7 @@ class TestClass01 {
     {
         return $this->test;
     }
+
+
 
 } 
