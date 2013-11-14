@@ -20,6 +20,8 @@ class TestClass01 {
 
     protected $test;
 
+    protected $formBuilder;
+
     public function __construct()
     {
         $this->test=new Test();
@@ -42,7 +44,16 @@ class TestClass01 {
         $b->addAnswer(new Answer("1", array(new ScaleScore($mainScale, 0))));
         $this->test->addQuestion($b);
 //echo $b->askQuestion();
-        echo $this->test->askQuestions();
+
+    }
+
+    public function getTestForm($formBuilder)
+    {
+        //$questionsText = $questionsText."<input type=submit value='ok'></form>";
+        $this->formBuilder = $this->test->askQuestions($formBuilder);
+        $form=$this->formBuilder->getForm();
+
+        return $form;
     }
 
     public function setTest($test)

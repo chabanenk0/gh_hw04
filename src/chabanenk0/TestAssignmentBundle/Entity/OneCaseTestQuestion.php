@@ -29,6 +29,28 @@ class OneCaseTestQuestion extends AbstractTestQuestion implements AskableInterfa
         return $resulttext;
     }
 
+    public function addQuestionToForm($formBuilder)
+    {
+        $qnum=$this->number;
+        $num=0;
+        $choices=array();
+
+        foreach ($this->answers as $i) {
+            $num=$num+1; // !!! Bad idea! It needs to add id to the Answer's class!!! The same for question number (fixed)
+            $choices[$i->getNumber()]=$i->ask();
+        }
+        $formBuilder->add("ans".$this->number,"choice",array(
+            "choices"=>$choices,
+            "expanded"=>true,
+            "multiple"=>false,
+            'label'=>'Question #'.$this->number.': '.$this->question,
+        ));
+
+
+        return $formBuilder;
+    }
+
+
     public function calculateScore($request)
     {
         $answer=$request->get("ans".$this->number);

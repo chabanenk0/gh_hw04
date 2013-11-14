@@ -26,6 +26,28 @@ class MultiCaseTestQuestion extends AbstractTestQuestion
     return $resulttext;
     }
 
+    public function addQuestionToForm($formBuilder)
+    {
+        $qnum=$this->number;
+        $num=0;
+        $formBuilder->add("q".$this->number,"collection",array(
+            "label"=>'Question #'.$this->number.': '.$this->question,
+            "read_only"=>true,
+        ));
+
+        foreach ($this->answers as $i) {
+            $num=$num+1; // !!! Bad idea! It needs to add id to the Answer's class!!! The same for question number (fixed)
+            $formBuilder->add("ans".$i->getNumber(),"checkbox",array(
+                'value'=>$i->getNumber(),
+                'label'=>$i->ask(),
+                'required'  => false,
+            ));
+        }
+
+        return $formBuilder;
+    }
+
+
     public function calculateScore($request)
     {
 
