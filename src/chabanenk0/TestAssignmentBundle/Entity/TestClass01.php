@@ -16,8 +16,13 @@ use chabanenk0\TestAssignmentBundle\Entity\MultiCaseTestQuestion;
 use chabanenk0\TestAssignmentBundle\Entity\Test;
 use Symfony\Component\Form\Form;
 
+use Doctrine\ORM\Mapping as ORM;
 
-class TestClass01 {
+
+class TestClass01
+{
+
+    protected $id;
 
     protected $test;
 
@@ -45,7 +50,6 @@ class TestClass01 {
         $b->addAnswer(new Answer("1", array(new ScaleScore($mainScale, 0))));
         $this->test->addQuestion($b);
 //echo $b->askQuestion();
-
     }
 
     public function getTestForm($formBuilder)
