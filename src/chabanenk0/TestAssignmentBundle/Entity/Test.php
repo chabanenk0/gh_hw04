@@ -19,6 +19,8 @@ use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Component\Validator\Constraints\MinLength;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Form\Form;
 
 
 /**
@@ -35,14 +37,57 @@ class Test
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="AbstractTestQuestion", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="AbstractTestQuestion", mappedBy="testId",cascade={"persist"})
      */
     protected $questions;
 
     /**
-     * @ORM\OneToMany(targetEntity="Scale", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="Scale", mappedBy="testId",cascade={"persist"})
      */
     protected $scales;
+
+    /**
+     * @ORM\Column(type="text",nullable=true)
+     */
+    protected $testName;
+
+    /**
+     * @ORM\Column(type="text",nullable=true)
+     */
+    protected $testDescription;
+
+
+    /**
+     * @param mixed $testDescription
+     */
+    public function setTestDescription($testDescription)
+    {
+        $this->testDescription = $testDescription;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTestDescription()
+    {
+        return $this->testDescription;
+    }
+
+    /**
+     * @param mixed $testName
+     */
+    public function setTestName($testName)
+    {
+        $this->testName = $testName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTestName()
+    {
+        return $this->testName;
+    }
 
     public function __construct()
     {
@@ -57,7 +102,8 @@ class Test
 
     public function addQuestion(AbstractTestQuestion $newQuestion)
     {
-        array_push($this->questions, $newQuestion);
+        $newQuestion->setTestId($this);
+        $this->questions->add($newQuestion);
     }
 
     public function askQuestions($formBuilder)
@@ -90,7 +136,8 @@ class Test
     public function addScale($newScale)
     {
         if ($newScale instanceof Scale) {
-            array_push($this->scales, $newScale);
+            $newScale->setTestId($this);
+            $this->scales->add($newScale);
         }
     }
     public function getScales()
@@ -103,6 +150,17 @@ class Test
         foreach ($this->questions as $currentQuestion) {
             $currentQuestion->calculateScore($request);
         }
+    }
+
+    public function calculateScaleArray(Form $request)
+    {
+        $this->calculateScales($request);
+        $scales = $this->getScales();
+        $scaleScoresArray=array();
+        foreach ($scales as $scale) {
+            $scaleScoresArray[]=$scale->getScore();
+        }
+        return $scaleScoresArray;
     }
 
 

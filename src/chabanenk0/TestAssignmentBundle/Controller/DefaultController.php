@@ -12,33 +12,27 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $id=$request->get('id');
-        switch ($id) {
-            case 1:
-                $testclass = new TestClass01();
-                break;
-            case 2:
-                $testclass = new TestClass01();
-                break;
-            case 3:
-                $testclass = new TestClass01();
-                break;
-            default:
-                $testclass = new TestClass01();
-                break;
+        $testClass = $this->getDoctrine()
+            ->getRepository('chabanenk0TestAssignmentBundle:Test')
+            ->findOneById($id);
 
+        if (!$testClass) {
+            throw $this->createNotFoundException(
+                'No test record found  '
+            );
         }
 
         $formBuilder = $this->CreateFormBuilder();
-        $form=$testclass->getTestForm($formBuilder);
+        $formBuilder = $testClass->askQuestions($formBuilder);
+        $form=$formBuilder->getForm();
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             // perform some action, such as saving the task to the database
-            $scalesArray = $testclass->calculateScale($form);
+            $scalesArray = $testClass->calculateScaleArray($form);
             return $this->render("chabanenk0TestAssignmentBundle:Default:scales.html.twig",array('scales'=>$scalesArray ));
         }
-
 
         return $this->render("chabanenk0TestAssignmentBundle:Default:test.html.twig",array('form'=>$form->createView(),'id'=>$id));
 

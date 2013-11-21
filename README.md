@@ -31,6 +31,14 @@ composer update
 </VirtualHost>
 </plaintext>
 
+4) Nodify the file app/config/parameters.yml, set up Your database's settings
+
+5) run
+app/console doctrine:database:create
+
+6) run 
+app/console doctrine:fixtures:load
+
 ---------
 Usage:
 
@@ -45,3 +53,5 @@ You can edit the template's content in the file: src/Acme/DemoBundle/Resources/v
 3) Third routing point: /third (displays the template, that extenses the BASE template)
 
 You can edit the template's content in the file: src/Acme/DemoBundle/Resources/views/My/third.html.twig
+
+

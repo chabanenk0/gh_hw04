@@ -27,7 +27,13 @@ class ScaleScore
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Scale", inversedBy="scale")
+     * @ORM\ManyToOne(targetEntity="Answer", inversedBy="scores",cascade={"persist"})
+     * @ORM\JoinColumn(name="answer_id", referencedColumnName="id")
+     **/
+    protected $answer;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Scale", inversedBy="score",cascade={"persist"})
      * @ORM\JoinColumn(name="scale", referencedColumnName="id")
      **/
     protected $scale;
@@ -90,4 +96,22 @@ class ScaleScore
     {
         return $this->id;
     }
+
+    /**
+     * @param mixed $answer
+     */
+    public function setAnswer($answer)
+    {
+        $this->answer = $answer;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAnswer()
+    {
+        return $this->answer;
+    }
+
+
 }

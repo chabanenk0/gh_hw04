@@ -60,22 +60,15 @@ class MyController extends Controller
 
     public function testsAction()
     {
-        $testsArray = array();
-        $test1 = new TestAssignment();
-        $test1->setId(1);
-        $test1->setName("Таблица умножения");
-        $test1->setDescription("Автогенерируемый тест на знания таблицы умножения для учеников 2 класса");
-        $testsArray[]=$test1;
-        $test2 = new TestAssignment();
-        $test2->setId(2);
-        $test2->setName("Тест темперамента Айзенка");
-        $test2->setDescription("Тест на определение типа темперамента Ганса Айзенка");
-        $testsArray[]=$test2;
-        $test3 = new TestAssignment();
-        $test3->setId(3);
-        $test3->setName("IQ-тест");
-        $test3->setDescription("Тест на определение уровня интеллекта Ганса Айзенка № 1.");
-        $testsArray[]=$test3;
+        $testsArray = $this->getDoctrine()
+            ->getRepository('chabanenk0TestAssignmentBundle:Test')
+            ->findAll();
+
+        if (!$testsArray) {
+            throw $this->createNotFoundException(
+                'No test record found  '
+            );
+        }
 
         return $this->render('AcmeDemoBundle:My:tests.html.twig',array('tests'=>$testsArray));
     }

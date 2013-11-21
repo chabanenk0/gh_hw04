@@ -7,9 +7,13 @@ namespace chabanenk0\TestAssignmentBundle\Entity;
 
 use chabanenk0\TestAssignmentBundle\Entity\Answer;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="questionType", type="string")
+ * @ORM\DiscriminatorMap({"one" = "OneCaseTestQuestion", "multi" = "MultiCaseTestQuestion"})
  * @ORM\Table(name="questions")
  */
 abstract class AbstractTestQuestion implements AskableInterface
@@ -20,6 +24,12 @@ abstract class AbstractTestQuestion implements AskableInterface
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Test", inversedBy="questions")
+     * @ORM\JoinColumn(name="test_id", referencedColumnName="id")
+     */
+    protected $testId;
 
     protected static $totalQuestionsNumber; // doesn't work. It is not a global property
 
@@ -39,9 +49,27 @@ abstract class AbstractTestQuestion implements AskableInterface
     protected $question;
 
     /**
-     * @ORM\OneToMany(targetEntity="Answer", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="Answer", mappedBy="questionID",cascade={"persist"})
      */
     protected $answers; // should be an array of Answer's objects
+
+
+    /**
+     * @param mixed $testId
+     */
+    public function setTestId($testId)
+    {
+        $this->testId = $testId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTestId()
+    {
+        return $this->testId;
+    }
+
 
     /**
      * @param int $number
@@ -61,7 +89,7 @@ abstract class AbstractTestQuestion implements AskableInterface
 
     public function __construct()
     {
-        $this->answers=array();
+        $this->answers=new ArrayCollection();
         self::$totalQuestionsNumber = self::$totalQuestionsNumber+1;
         $this->number=self::$totalQuestionsNumber;
         $this->numberOfAnswers=0;
@@ -89,11 +117,13 @@ abstract class AbstractTestQuestion implements AskableInterface
     {
         $this->numberOfAnswers = $this->numberOfAnswers + 1;
         if ($answer instanceof Answer) {
-            array_push($this->answers, $answer);
+            $answer->setQuestionID($this);
+            $this->answers->add($answer);
         }
         elseif (is_string($answer)) {
             $ans=new Answer($answer);
-            array_push($this->answers, $ans);
+            $ans->setQuestionID($this);
+            $this->answers->add($ans);
         }
         else {
             die ("Wrong type for method addAnswer");// it needs to add exceptions...
@@ -105,7 +135,8 @@ abstract class AbstractTestQuestion implements AskableInterface
         $ans=new Answer("");
         $this->numberOfAnswers=$this->numberOfAnswers+1;
         $ans->setAnswer($answer);
-        array_push($this->answers, $ans);
+        $ans->setQuestionID($this);
+        $this->answers->add($ans);
     }
 
     /**

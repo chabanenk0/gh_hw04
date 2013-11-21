@@ -7,9 +7,14 @@ namespace chabanenk0\TestAssignmentBundle\Entity;
 use chabanenk0\TestAssignmentBundle\Entity\TestQuestion;
 use chabanenk0\TestAssignmentBundle\Entity\AskableInterface;
 use chabanenk0\TestAssignmentBundle\Entity\ScalableInterface;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity
+ */
 class OneCaseTestQuestion extends AbstractTestQuestion implements AskableInterface, ScalableInterface
 {
+
     public function __construct()
     {
         parent::__construct();

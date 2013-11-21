@@ -31,6 +31,12 @@ class Scale
     protected $score = 0;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Test", inversedBy="scales",cascade={"persist"})
+     * @ORM\JoinColumn(name="test_id", referencedColumnName="id")
+     **/
+    protected $testId;
+
+    /**
      * @return int
      */
     public function getScore()
@@ -72,4 +78,22 @@ class Scale
     
         return $this;
     }
+
+    /**
+     * @param mixed $testId
+     */
+    public function setTestId($testId)
+    {
+        $this->testId = $testId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTestId()
+    {
+        return $this->testId;
+    }
+
+
 }

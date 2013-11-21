@@ -2,7 +2,9 @@
 
 namespace chabanenk0\TestAssignmentBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+
 
 /**
  * @ORM\Entity
@@ -17,6 +19,13 @@ class Answer
      */
     protected $id;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AbstractTestQuestion", inversedBy="answers")
+     * @ORM\JoinColumn(name="question_id", referencedColumnName="id")
+     */
+    protected $questionID;
+
+
     protected static $totalAnswersNumber=1;
 
     /**
@@ -25,16 +34,22 @@ class Answer
     protected $number;
 
     /**
-     * @ORM\OneToMany(targetEntity="ScaleScore", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="ScaleScore", mappedBy="answer",cascade={"persist"})
      */
     protected $scores;
 
-    public function __construct ($newAnswerText, $scaleScores=0)
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $answerText;
+
+    public function __construct ($newAnswerText, $scaleScore)
     {
         self::$totalAnswersNumber = self::$totalAnswersNumber + 1;
         $this->number = self::$totalAnswersNumber;
         $this->answerText=$newAnswerText;
-        $this->setScores($scaleScores);
+        $scaleScore->setAnswer($this);
+        $this->setScores(new ArrayCollection(array($scaleScore)));
     }
 
     /**
@@ -52,7 +67,6 @@ class Answer
     {
         return $this->number;
     }
-    protected $answerText;
 
     public function getAnswer ()
     {
@@ -74,17 +88,21 @@ class Answer
     public function setScores($scores)
     {
         $this->scores = $scores;
+
     }
 
     public function addScore($scale, $score)
     {
-        if ($scale instanceof Scale)
-            array_push($this->scores, new ScaleScore($scale, $score));
+        if ($scale instanceof Scale) {
+            $newScaleScore = new ScaleScore($scale, $score);
+            $newScaleScore->setAnswer($this);
+            $this->scores->add($newScaleScore);
+        }
     }
 
     public function clearScores()
     {
-        $this->scores=array();
+        $this->scores=new ArrayCollection();
     }
 
     public function calcScores()
@@ -125,4 +143,22 @@ class Answer
     {
         $this->scores->removeElement($scores);
     }
+
+    /**
+     * @param mixed $questionID
+     */
+    public function setQuestionID($questionID)
+    {
+        $this->questionID = $questionID;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getQuestionID()
+    {
+        return $this->questionID;
+    }
+
+
 }
