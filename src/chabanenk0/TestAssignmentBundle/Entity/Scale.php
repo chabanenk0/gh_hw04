@@ -9,10 +9,32 @@
  */
 
 namespace chabanenk0\TestAssignmentBundle\Entity;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="scales")
+ */
+class Scale
+{
 
-class Scale {
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
     protected $score = 0;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Test", inversedBy="scales",cascade={"persist"})
+     * @ORM\JoinColumn(name="test_id", referencedColumnName="id")
+     **/
+    protected $testId;
 
     /**
      * @return int
@@ -33,4 +55,45 @@ class Scale {
         $this->score = $this->score + $amount;
     }
 
-} 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set score
+     *
+     * @param integer $score
+     * @return Scale
+     */
+    public function setScore($score)
+    {
+        $this->score = $score;
+    
+        return $this;
+    }
+
+    /**
+     * @param mixed $testId
+     */
+    public function setTestId($testId)
+    {
+        $this->testId = $testId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTestId()
+    {
+        return $this->testId;
+    }
+
+
+}

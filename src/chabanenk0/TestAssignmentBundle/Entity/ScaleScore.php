@@ -10,11 +10,38 @@
 
 namespace chabanenk0\TestAssignmentBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 
-class ScaleScore {
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="scalescores")
+ */
+class ScaleScore
+{
+
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Answer", inversedBy="scores",cascade={"persist"})
+     * @ORM\JoinColumn(name="answer_id", referencedColumnName="id")
+     **/
+    protected $answer;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Scale", inversedBy="score",cascade={"persist"})
+     * @ORM\JoinColumn(name="scale", referencedColumnName="id")
+     **/
     protected $scale;
 
-    protected $score; //double
+    /**
+     * @ORM\Column(type="float")
+     */
+    protected $score;
 
     public function __construct($scale, $score)
     {
@@ -59,4 +86,32 @@ class ScaleScore {
     {
         $this->scale->increaseScore($this->score);
     }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $answer
+     */
+    public function setAnswer($answer)
+    {
+        $this->answer = $answer;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAnswer()
+    {
+        return $this->answer;
+    }
+
+
 }

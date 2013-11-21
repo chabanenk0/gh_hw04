@@ -18,13 +18,82 @@ use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Component\Validator\Constraints\MinLength;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Form\Form;
 
 
-class Test 
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="tests")
+ */
+class Test
 {
-    protected $questions = array(); // array of AbstractTestQuestion's
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
 
-    protected $scales = array();
+    /**
+     * @ORM\OneToMany(targetEntity="AbstractTestQuestion", mappedBy="testId",cascade={"persist"})
+     */
+    protected $questions;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Scale", mappedBy="testId",cascade={"persist"})
+     */
+    protected $scales;
+
+    /**
+     * @ORM\Column(type="text",nullable=true)
+     */
+    protected $testName;
+
+    /**
+     * @ORM\Column(type="text",nullable=true)
+     */
+    protected $testDescription;
+
+
+    /**
+     * @param mixed $testDescription
+     */
+    public function setTestDescription($testDescription)
+    {
+        $this->testDescription = $testDescription;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTestDescription()
+    {
+        return $this->testDescription;
+    }
+
+    /**
+     * @param mixed $testName
+     */
+    public function setTestName($testName)
+    {
+        $this->testName = $testName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTestName()
+    {
+        return $this->testName;
+    }
+
+    public function __construct()
+    {
+        $this->questions=new ArrayCollection();
+        $this->scales=new ArrayCollection();
+    }
 
     public function clearQuestions()
     {
@@ -33,7 +102,8 @@ class Test
 
     public function addQuestion(AbstractTestQuestion $newQuestion)
     {
-        array_push($this->questions, $newQuestion);
+        $newQuestion->setTestId($this);
+        $this->questions->add($newQuestion);
     }
 
     public function askQuestions($formBuilder)
@@ -66,7 +136,8 @@ class Test
     public function addScale($newScale)
     {
         if ($newScale instanceof Scale) {
-            array_push($this->scales, $newScale);
+            $newScale->setTestId($this);
+            $this->scales->add($newScale);
         }
     }
     public function getScales()
@@ -81,6 +152,55 @@ class Test
         }
     }
 
-}
+    public function calculateScaleArray(Form $request)
+    {
+        $this->calculateScales($request);
+        $scales = $this->getScales();
+        $scaleScoresArray=array();
+        foreach ($scales as $scale) {
+            $scaleScoresArray[]=$scale->getScore();
+        }
+        return $scaleScoresArray;
+    }
 
-?>
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Remove questions
+     *
+     * @param \chabanenk0\TestAssignmentBundle\Entity\AbstractTestQuestion $questions
+     */
+    public function removeQuestion(\chabanenk0\TestAssignmentBundle\Entity\AbstractTestQuestion $questions)
+    {
+        $this->questions->removeElement($questions);
+    }
+
+    /**
+     * Get questions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getQuestions()
+    {
+        return $this->questions;
+    }
+
+    /**
+     * Remove scales
+     *
+     * @param \chabanenk0\TestAssignmentBundle\Entity\Scale $scales
+     */
+    public function removeScale(\chabanenk0\TestAssignmentBundle\Entity\Scale $scales)
+    {
+        $this->scales->removeElement($scales);
+    }
+}

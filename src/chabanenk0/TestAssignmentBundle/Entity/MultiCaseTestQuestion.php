@@ -4,7 +4,11 @@ namespace chabanenk0\TestAssignmentBundle\Entity;
 
 use chabanenk0\TestAssignmentBundle\Entity\TestQuestion;
 use chabanenk0\TestAssignmentBundle\Entity\AskableInterface;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity
+ */
 class MultiCaseTestQuestion extends AbstractTestQuestion
 {
     public function __construct()
