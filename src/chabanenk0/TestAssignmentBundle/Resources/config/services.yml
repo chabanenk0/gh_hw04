@@ -1,7 +1,7 @@
 parameters:
-#    chabanenk0_test_assignment.example.class: chabanenk0\TestAssignmentBundle\Example
+    chabanenk0_test_assignment.example.class: chabanenk0\TestAssignmentBundle\Services\TestListenerService
 
 services:
-#    chabanenk0_test_assignment.example:
-#        class: %chabanenk0_test_assignment.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    chabanenk0_test_assignment.example:
+        class: %chabanenk0_test_assignment.example.class%
+        arguments: [@doctrine, @event_dispatcher]
