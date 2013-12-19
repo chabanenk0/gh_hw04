@@ -21,8 +21,10 @@ class chabanenk0TestAssignmentExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
+        //var_dump("before load...");
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+        //var_dump("load in depInj..");
     }
 }
