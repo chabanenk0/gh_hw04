@@ -37,7 +37,7 @@ class Test
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="AbstractTestQuestion", mappedBy="testId",cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AbstractTestQuestion", mappedBy="testId",cascade={"all"}, fetch="EAGER")
      */
     protected $questions;
 
@@ -160,7 +160,7 @@ class Test
         foreach ($scales as $scale) {
             $scaleScoresArray[]=$scale->getScore();
         }
-        return $scaleScoresArray;
+        return $scales;//ScoresArray;
     }
 
 
@@ -203,4 +203,5 @@ class Test
     {
         $this->scales->removeElement($scales);
     }
+
 }

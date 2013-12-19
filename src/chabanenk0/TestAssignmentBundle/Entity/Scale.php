@@ -31,6 +31,12 @@ class Scale
     protected $score = 0;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    protected $name = 0;
+
+
+    /**
      * @ORM\ManyToOne(targetEntity="Test", inversedBy="scales",cascade={"persist"})
      * @ORM\JoinColumn(name="test_id", referencedColumnName="id")
      **/
@@ -95,5 +101,19 @@ class Scale
         return $this->testId;
     }
 
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 }

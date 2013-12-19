@@ -23,10 +23,13 @@ class LoadTestData2 implements FixtureInterface
             $test->setTestName("Тест темперамента Айзенка");
             $test->setTestDescription("Тест темперамента Айзенка (холерик, сангвиник, флегматик, меланхолик). Используются шкалы: экстраверсии, эмоциональной устойчивости, лжи, ");
             $extraversiyaScale=new Scale();
+            $extraversiyaScale->setName('экстраверсии');
             $test->addScale($extraversiyaScale);
             $ustoychivostScale=new Scale();
+            $ustoychivostScale->setName('устойчивости');
             $test->addScale($ustoychivostScale);
             $lieScale=new Scale();
+            $lieScale->setName('лжи');
             $test->addScale($lieScale);
             $questions = $this->getAnswersArray();
 			
@@ -152,10 +155,32 @@ class LoadTestData2 implements FixtureInterface
 			$qscales[41-1]['extraversiyaScaleNo']=1;
 			$qscales[51-1]['extraversiyaScaleNo']=1;
 			
-			//ustoychivost da 2, 4, 7, 9, 11, 14, 16, 19, 21, 23, 26, 28, 31, 33, 35, 38, 40, 43, 45, 47, 50, 52, 55, 57.
+			//ustoychivost da 2, 4, 7, 9, 11, 14, 16, 19, 21, 23, 
+			//26, 28, 31, 33, 35, 38, 40, 43, 45, 47, 50, 52, 55, 57.
 			$qscales[2-1]['ustoychivostScaleYes']=1;
-			
-			
+			$qscales[4-1]['ustoychivostScaleYes']=1;
+			$qscales[7-1]['ustoychivostScaleYes']=1;
+			$qscales[9-1]['ustoychivostScaleYes']=1;
+			$qscales[11-1]['ustoychivostScaleYes']=1;
+			$qscales[14-1]['ustoychivostScaleYes']=1;
+			$qscales[16-1]['ustoychivostScaleYes']=1;
+			$qscales[19-1]['ustoychivostScaleYes']=1;
+			$qscales[21-1]['ustoychivostScaleYes']=1;
+			$qscales[23-1]['ustoychivostScaleYes']=1;
+			$qscales[26-1]['ustoychivostScaleYes']=1;
+			$qscales[28-1]['ustoychivostScaleYes']=1;
+			$qscales[31-1]['ustoychivostScaleYes']=1;
+			$qscales[33-1]['ustoychivostScaleYes']=1;
+			$qscales[35-1]['ustoychivostScaleYes']=1;
+			$qscales[38-1]['ustoychivostScaleYes']=1;
+			$qscales[40-1]['ustoychivostScaleYes']=1;
+			$qscales[43-1]['ustoychivostScaleYes']=1;
+			$qscales[45-1]['ustoychivostScaleYes']=1;
+			$qscales[47-1]['ustoychivostScaleYes']=1;
+			$qscales[50-1]['ustoychivostScaleYes']=1;
+			$qscales[52-1]['ustoychivostScaleYes']=1;
+			$qscales[55-1]['ustoychivostScaleYes']=1;
+			$qscales[57-1]['ustoychivostScaleYes']=1;
 			
 			return $qscales;
 		}

@@ -5,6 +5,10 @@ namespace chabanenk0\TestAssignmentBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormBuilder;
 use chabanenk0\TestAssignmentBundle\Entity\TestClass01;
+use chabanenk0\TestAssignmentBundle\Entity\User;
+use chabanenk0\TestAssignmentBundle\Entity\Test;
+use chabanenk0\TestAssignmentBundle\Form\UserType;
+use chabanenk0\TestAssignmentBundle\Form\TestType;
 use Symfony\Component\HttpFoundation\Request;
 use chabanenk0\TestAssignmentBundle\Entity\OpenEvent;
 
@@ -50,4 +54,45 @@ class DefaultController extends Controller
 
         //return $this->render('chabanenk0TestAssignmentBundle:Default:index.html.twig', array('id' => $id));
     }
+
+    public function newUserAction(Request $request)
+    {
+        $user =  new User();
+
+        $form = $this->CreateForm(new UserType(), $user);
+
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // perform some action, such as saving the task to the database
+            $em =  $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            return $this->redirect($this->generateUrl("_index"));
+        }
+
+        return $this->render("chabanenk0TestAssignmentBundle:Default:newuser.html.twig",array('form'=>$form->createView()));
+    }
+
+    public function newTestAction(Request $request)
+    {
+        $test =  new Test();
+
+        $form = $this->CreateForm(new TestType(), $test);
+
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // perform some action, such as saving the task to the database
+            $em =  $this->getDoctrine()->getManager();
+            $em->persist($test);
+            $em->flush();
+            return $this->redirect($this->generateUrl("_index"));
+        }
+
+        return $this->render("chabanenk0TestAssignmentBundle:Default:newtest.html.twig",array('form'=>$form->createView()));
+    }
+
 }
