@@ -13,7 +13,7 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $dispatcher = $this->container->get('event_dispatcher');
-        $myservice = $this->container->get("chabanenk0_test_assignment.example");
+        //$myservice = $this->container->get("chabanenk0_test_assignment.example");
         $event = new OpenEvent();
         $dispatcher -> dispatch("chabtest.opentest",$event);
         //var_dump("after first event");

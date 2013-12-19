@@ -5,3 +5,6 @@ services:
     chabanenk0_test_assignment.example:
         class: %chabanenk0_test_assignment.example.class%
         arguments: [@doctrine, @event_dispatcher]
+        tags:
+            - { name: kernel.event_listener, event: chabtest.opentest, method: onOpenAction }
+            #- { name: kernel.event_subscriber }

@@ -2,9 +2,10 @@
 
 namespace chabanenk0\TestAssignmentBundle\Services;
 
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\Event;
 
-class TestListenerService
+class TestListenerService implements EventSubscriberInterface
 {
     protected $doctrine;
 
@@ -22,10 +23,15 @@ class TestListenerService
     public function onOpenAction(Event $event)
     {
         $event->getDispatcher()->dispatch('log', $event);
-        var_dump("onOpenAction!!");
+        //var_dump("onOpenAction!!");
         $em = $this->doctrine->getManager();
         $em->persist($event);
         $em->flush();
+    }
+
+    public static function getSubscribedEvents()
+    {
+    	return array('chabtest.opentest'=>'onOpenAction');
     }
     
 }
