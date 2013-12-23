@@ -2,3 +2,10 @@ chabanenk0_test_assignment_homepage:
     pattern:  /test/{id}
     defaults: { _controller: chabanenk0TestAssignmentBundle:Default:index }
 
+chabanenk0_test_assignment_newuser:
+    pattern:  /newuser/
+    defaults: { _controller: chabanenk0TestAssignmentBundle:Default:newUser }
+
+chabanenk0_test_assignment_newtest:
+    pattern:  /newtest/
+    defaults: { _controller: chabanenk0TestAssignmentBundle:Default:newTest }

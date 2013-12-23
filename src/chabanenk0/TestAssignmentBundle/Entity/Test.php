@@ -37,7 +37,7 @@ class Test
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="AbstractTestQuestion", mappedBy="testId",cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AbstractTestQuestion", mappedBy="testId",cascade={"all"}, fetch="EAGER")
      */
     protected $questions;
 
@@ -147,20 +147,27 @@ class Test
 
     public function calculateScales($request)
     {
+        $selectedAnswers =  array();
         foreach ($this->questions as $currentQuestion) {
-            $currentQuestion->calculateScore($request);
+            $currentAnswers = $currentQuestion->calculateScore($request);
+            $selectedAnswers = array_merge($selectedAnswers,$currentAnswers);
         }
+
+        return $selectedAnswers;
     }
 
     public function calculateScaleArray(Form $request)
     {
-        $this->calculateScales($request);
+        $selectedAnswers = $this->calculateScales($request);
         $scales = $this->getScales();
         $scaleScoresArray=array();
         foreach ($scales as $scale) {
             $scaleScoresArray[]=$scale->getScore();
         }
-        return $scaleScoresArray;
+        return array(
+            'scales'=>$scales,
+            'answers'=>new ArrayCollection($selectedAnswers),
+        );
     }
 
 
@@ -203,4 +210,5 @@ class Test
     {
         $this->scales->removeElement($scales);
     }
+
 }

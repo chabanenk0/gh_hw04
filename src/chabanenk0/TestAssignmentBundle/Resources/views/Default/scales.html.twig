@@ -5,7 +5,7 @@
 
 {% block content %}
 {% for scalevalue in scales %}
-     <p> Ваша оценка: {{ scalevalue }} </p>
+     <p> Ваша оценка по шкале {{ scalevalue.name}}: {{ scalevalue.score }} </p>
 {% endfor %}
 {% endblock content %}
 

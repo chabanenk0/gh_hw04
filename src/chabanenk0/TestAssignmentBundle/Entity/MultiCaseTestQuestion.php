@@ -5,6 +5,7 @@ namespace chabanenk0\TestAssignmentBundle\Entity;
 use chabanenk0\TestAssignmentBundle\Entity\TestQuestion;
 use chabanenk0\TestAssignmentBundle\Entity\AskableInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -56,11 +57,14 @@ class MultiCaseTestQuestion extends AbstractTestQuestion
     {
 
         $answers=$form->getData();
+        $selectedAnswers=array();
         foreach ($this->answers as $currentAnswer) {
             $answer=$answers["ans".$currentAnswer->getNumber()];
             if ($answer == 'on') {
                 $currentAnswer->calcScores();
+                $selectedAnswers[]=$currentAnswer;
             }
         }
+        return $selectedAnswers;
     }
 }
