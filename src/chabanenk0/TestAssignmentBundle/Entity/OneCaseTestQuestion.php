@@ -8,6 +8,7 @@ use chabanenk0\TestAssignmentBundle\Entity\TestQuestion;
 use chabanenk0\TestAssignmentBundle\Entity\AskableInterface;
 use chabanenk0\TestAssignmentBundle\Entity\ScalableInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -60,11 +61,15 @@ class OneCaseTestQuestion extends AbstractTestQuestion implements AskableInterfa
     {
         $data=$form->getData();
         $answer=$data["ans".$this->number];
+        $selectedAnswers = array();
         foreach ($this->answers as $currentAnswer) {
             if ($currentAnswer->getNumber() == $answer) {
                 $currentAnswer->calcScores();
+                $selectedAnswers[]=$currentAnswer;
             }
         }
+
+        return $selectedAnswers;
     }
 
 

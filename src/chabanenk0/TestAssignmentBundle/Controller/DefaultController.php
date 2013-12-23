@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilder;
 use chabanenk0\TestAssignmentBundle\Entity\TestClass01;
 use chabanenk0\TestAssignmentBundle\Entity\User;
 use chabanenk0\TestAssignmentBundle\Entity\Test;
+use chabanenk0\TestAssignmentBundle\Entity\AnswerRecord;
 use chabanenk0\TestAssignmentBundle\Form\UserType;
 use chabanenk0\TestAssignmentBundle\Form\TestType;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +26,7 @@ class DefaultController extends Controller
         //$myservice->onOpenAction($event);
         //var_dump("after first event direct dispatch");
         $id=$request->get('id');
+        $userId=1;//!!!temporary. Should be corrected after implementin sequrity issues!!!
         $testClass = $this->getDoctrine()
             ->getRepository('chabanenk0TestAssignmentBundle:Test')
             ->findOneById($id);
@@ -44,8 +46,18 @@ class DefaultController extends Controller
 
         if ($form->isValid()) {
             // perform some action, such as saving the task to the database
-            $scalesArray = $testClass->calculateScaleArray($form);
+            $resultScalesAnswers = $testClass->calculateScaleArray($form);
+            $scalesArray = $resultScalesAnswers['scales'];
+            $answersArray = $resultScalesAnswers['answers'];
+            $currentUser = $this->getDoctrine()
+            ->getRepository('chabanenk0TestAssignmentBundle:User')
+            ->findOneById($userId);
+            $newAnswerRecord = new AnswerRecord($currentUser,$scalesArray,$answersArray);
+            $em =  $this->getDoctrine()->getManager();
+            $em->persist($newAnswerRecord);
+            $em->flush();
             $dispatcher -> dispatch("chabtest.opentest",new OpenEvent($id,"TestSubmitted"));
+
             return $this->render("chabanenk0TestAssignmentBundle:Default:scales.html.twig",array('scales'=>$scalesArray ));
         }
         $dispatcher -> dispatch("chabtest.opentest",new OpenEvent($id,"TestRequested"));

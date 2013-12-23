@@ -147,20 +147,27 @@ class Test
 
     public function calculateScales($request)
     {
+        $selectedAnswers =  array();
         foreach ($this->questions as $currentQuestion) {
-            $currentQuestion->calculateScore($request);
+            $currentAnswers = $currentQuestion->calculateScore($request);
+            $selectedAnswers = array_merge($selectedAnswers,$currentAnswers);
         }
+
+        return $selectedAnswers;
     }
 
     public function calculateScaleArray(Form $request)
     {
-        $this->calculateScales($request);
+        $selectedAnswers = $this->calculateScales($request);
         $scales = $this->getScales();
         $scaleScoresArray=array();
         foreach ($scales as $scale) {
             $scaleScoresArray[]=$scale->getScore();
         }
-        return $scales;//ScoresArray;
+        return array(
+            'scales'=>$scales,
+            'answers'=>new ArrayCollection($selectedAnswers),
+        );
     }
 
 
