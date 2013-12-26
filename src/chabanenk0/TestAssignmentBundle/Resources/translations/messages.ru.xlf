@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="1">
                 <source>Our tests</source>
-                <target>Unsere testungen</target>
+                <target>Наши тесты</target>
             </trans-unit>
         </body>
     </file>

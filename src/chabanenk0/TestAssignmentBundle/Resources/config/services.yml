@@ -1,5 +1,7 @@
 parameters:
     chabanenk0_test_assignment.example.class: chabanenk0\TestAssignmentBundle\Services\TestListenerService
+    chabanenk0_twig_extention.example.class: chabanenk0\TestAssignmentBundle\Services\TwigNewFunctionsService
+
 
 services:
     chabanenk0_test_assignment.example:
@@ -8,3 +10,8 @@ services:
         tags:
             - { name: kernel.event_listener, event: chabtest.opentest, method: onOpenAction }
             #- { name: kernel.event_subscriber }
+    chabanenk0_test_assignment.example:
+        class: %chabanenk0_twig_extention.example.class%
+        arguments: []
+        tags:
+            - {name: twig.extension }

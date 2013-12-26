@@ -17,6 +17,7 @@ class DefaultController extends Controller
 {
     public function indexAction(Request $request)
     {
+        $request->setLocale('ru');
         $dispatcher = $this->container->get('event_dispatcher');
         //$myservice = $this->container->get("chabanenk0_test_assignment.example");
         $event = new OpenEvent();
