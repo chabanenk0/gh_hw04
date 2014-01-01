@@ -35,12 +35,24 @@ class Scale
      */
     protected $name = 0;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ScaleScore", mappedBy="scale",cascade={"persist"})
+     **/
+    protected $scaleScores;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="Test", inversedBy="scales",cascade={"persist"})
      * @ORM\JoinColumn(name="test_id", referencedColumnName="id")
      **/
     protected $testId;
+
+    public function __construct(Scale $scale)
+    {
+        $this->setName($scale->getName());
+        $this->setScore($scale->getScore());
+        $this->scaleScores=$scale->scaleScores;
+    }
 
     /**
      * @return int

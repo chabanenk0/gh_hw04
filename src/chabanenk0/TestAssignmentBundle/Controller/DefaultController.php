@@ -17,6 +17,7 @@ class DefaultController extends Controller
 {
     public function indexAction(Request $request)
     {
+        $request->setLocale('ru');
         $dispatcher = $this->container->get('event_dispatcher');
         //$myservice = $this->container->get("chabanenk0_test_assignment.example");
         $event = new OpenEvent();
@@ -46,6 +47,7 @@ class DefaultController extends Controller
 
         if ($form->isValid()) {
             // perform some action, such as saving the task to the database
+            $testClass->resetScales();
             $resultScalesAnswers = $testClass->calculateScaleArray($form);
             $scalesArray = $resultScalesAnswers['scales'];
             $answersArray = $resultScalesAnswers['answers'];
@@ -53,10 +55,11 @@ class DefaultController extends Controller
             ->getRepository('chabanenk0TestAssignmentBundle:User')
             ->findOneById($userId);
             $newAnswerRecord = new AnswerRecord($currentUser,$scalesArray,$answersArray);
-            $em =  $this->getDoctrine()->getManager();
-            $em->persist($newAnswerRecord);
-            $em->flush();
-            $dispatcher -> dispatch("chabtest.opentest",new OpenEvent($id,"TestSubmitted"));
+            $newAnswerRecord -> setTest($testClass);
+            $em =  $this -> getDoctrine()->getManager();
+            $em -> persist($newAnswerRecord);
+            $em -> flush();
+            $dispatcher -> dispatch("chabtest.opentest", new OpenEvent($id,"TestSubmitted"));
 
             return $this->render("chabanenk0TestAssignmentBundle:Default:scales.html.twig",array('scales'=>$scalesArray ));
         }

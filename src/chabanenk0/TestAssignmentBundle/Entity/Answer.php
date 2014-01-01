@@ -16,6 +16,10 @@ class Answer
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\ManyToMany(targetEntity="AnswerRecord")
+     * @ORM\JoinTable(name="answer_record_answers", 
+     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="answers")})
+     *      inverseJoinColumns={@ORM\JoinColumn(name="answers", referencedColumnName="id")},
      */
     protected $id;
 
