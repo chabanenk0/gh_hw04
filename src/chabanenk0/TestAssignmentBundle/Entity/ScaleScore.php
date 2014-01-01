@@ -33,7 +33,7 @@ class ScaleScore
     protected $answer;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Scale", inversedBy="score",cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Scale", inversedBy="scaleScores",cascade={"persist"})
      * @ORM\JoinColumn(name="scale", referencedColumnName="id")
      **/
     protected $scale;

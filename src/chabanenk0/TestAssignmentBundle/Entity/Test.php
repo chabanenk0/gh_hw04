@@ -160,12 +160,14 @@ class Test
     {
         $selectedAnswers = $this->calculateScales($request);
         $scales = $this->getScales();
-        $scaleScoresArray=array();
+        $scaleScoresArray=new ArrayCollection();
         foreach ($scales as $scale) {
-            $scaleScoresArray[]=$scale->getScore();
+            $newScale=new Scale($scale);
+            $newScale->setTestId($this);
+            $scaleScoresArray->add($newScale);
         }
         return array(
-            'scales'=>$scales,
+            'scales'=>$scaleScoresArray,
             'answers'=>new ArrayCollection($selectedAnswers),
         );
     }
@@ -209,6 +211,13 @@ class Test
     public function removeScale(\chabanenk0\TestAssignmentBundle\Entity\Scale $scales)
     {
         $this->scales->removeElement($scales);
+    }
+
+    public function resetScales()
+    {
+        foreach ($this->scales as $scale) {
+            $scale->resetScore();
+        }
     }
 
 }
