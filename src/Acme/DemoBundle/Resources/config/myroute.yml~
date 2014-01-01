@@ -1,0 +1,3 @@
+_first:
+    pattern: /first/
+    defaults: { _controller: AcmeDemoBundle:MyController:first }

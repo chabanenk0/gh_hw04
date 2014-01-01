@@ -1,4 +1,4 @@
-{% extends "AcmeDemoBundle::layout.html.twig" %}
+{% extends "::base.html.twig" %}
 
 {% block title "Hello! " %}
 
@@ -6,5 +6,6 @@
     <h1>Hello, everybody!</h1>
 <p>This is the simple Twig's template, that extends the Base one...</p>
 {% endblock %}
+
 
 {% set code = code(_self) %}

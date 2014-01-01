@@ -1,0 +1,11 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Ваш результат
+{% endblock title %}
+
+{% block content %}
+{% for scalevalue in scales %}
+     <p> Ваша оценка по шкале {{ scalevalue.name}}: {{ scalevalue.score }} </p>
+{% endfor %}
+{% endblock content %}
+
