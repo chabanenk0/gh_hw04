@@ -1,0 +1,33 @@
+_index:
+    pattern: /
+    defaults: { _controller: AcmeDemoBundle:My:index }
+
+
+_first:
+    pattern: /first/
+    defaults: { _controller: AcmeDemoBundle:My:first }
+
+_second:
+    pattern: /second/
+    defaults: { _controller: AcmeDemoBundle:My:second }
+
+_third:
+    pattern: /third/
+    defaults: { _controller: AcmeDemoBundle:My:third }
+
+
+_tests:
+    pattern: /tests/
+    defaults: { _controller: AcmeDemoBundle:My:tests }
+
+_contacts:
+    pattern: /contacts/
+    defaults: { _controller: AcmeDemoBundle:My:contacts }
+
+_about:
+    pattern: /about/
+    defaults: { _controller: AcmeDemoBundle:My:about }
+
+_testview:
+    pattern: /testview/{id}
+    defaults: { _controller: AcmeDemoBundle:My:testView }

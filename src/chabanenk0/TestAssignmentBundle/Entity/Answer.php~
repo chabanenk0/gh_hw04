@@ -1,0 +1,128 @@
+<?php
+
+namespace chabanenk0\TestAssignmentBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="answers")
+ */
+class Answer
+{
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    protected static $totalAnswersNumber=1;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $number;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ScaleScore", mappedBy="id")
+     */
+    protected $scores;
+
+    public function __construct ($newAnswerText, $scaleScores=0)
+    {
+        self::$totalAnswersNumber = self::$totalAnswersNumber + 1;
+        $this->number = self::$totalAnswersNumber;
+        $this->answerText=$newAnswerText;
+        $this->setScores($scaleScores);
+    }
+
+    /**
+     * @param int $number
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+    protected $answerText;
+
+    public function getAnswer ()
+    {
+        return $this->answerText;
+    }
+
+    public function setAnswer ($answerText)
+    {
+        $this->answerText=$answerText;
+    }
+
+    public function ask()
+    {
+        return  $this->answerText;
+    }
+    /**
+     * @param array $scores
+     */
+    public function setScores($scores)
+    {
+        $this->scores = $scores;
+    }
+
+    public function addScore($scale, $score)
+    {
+        if ($scale instanceof Scale)
+            array_push($this->scores, new ScaleScore($scale, $score));
+    }
+
+    public function clearScores()
+    {
+        $this->scores=array();
+    }
+
+    public function calcScores()
+    {
+        foreach ($this->scores as $currentScaleScore) {
+            $currentScaleScore->calculateScore();
+        }
+
+    }
+
+    /**
+     * @return array
+     */
+    public function getScores()
+    {
+        return $this->scores;
+    } //array of ScaleScore objects
+
+
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Remove scores
+     *
+     * @param \chabanenk0\TestAssignmentBundle\Entity\ScaleScore $scores
+     */
+    public function removeScore(\chabanenk0\TestAssignmentBundle\Entity\ScaleScore $scores)
+    {
+        $this->scores->removeElement($scores);
+    }
+}

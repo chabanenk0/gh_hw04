@@ -1,0 +1,12 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}
+ {{ title }}
+{% endblock title %}
+{% block content %}
+    <h1>{{ header }}</h1>
+<p>{{ message }}</p>
+{% endblock %}
+
+
+{% set code = code(_self) %}
