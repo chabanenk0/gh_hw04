@@ -1,0 +1,33 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Гостьова книга{% endblock %}
+
+{% block content %}
+    <form action='' method="post" class="form-signin">
+    {{ form_label(form.name)}} {{ form_widget(form.name)}} {{ form_errors(form.name) }}
+    {{ form_label(form.email)}}{{ form_widget(form.email) }} {{ form_errors(form.email) }}
+    {{ form_label(form.message)}}{{ form_widget(form.message) }} {{ form_errors(form.message) }}
+    {{ form_widget(form.ok) }}
+    {{ form_rest(form) }}
+    {{ form_errors(form) }}
+    </form>
+ 
+{% for post in posts %}
+<table>
+<tr>
+<td>Запись {{ post.id }} </td>
+<td> <a href=' {{path('_postview',{'id':post.id}) }}'>просмотреть</a> </td>
+</tr>
+<tr>
+<td> {{ post.message[:100]}} ... </td>
+<td> <a href=' {{path('_postdelete',{'id':post.id}) }}'> удалить </td>
+</tr>
+<p>
+</table>
+{% endfor %}
+
+{% endblock %}
+
+
+{% set code = code(_self) %}
+

@@ -10,6 +10,8 @@ use chabanenk0\TestAssignmentBundle\Entity\ScaleScore;
 use chabanenk0\TestAssignmentBundle\Entity\OneCaseTestQuestion;
 use chabanenk0\TestAssignmentBundle\Entity\MultiCaseTestQuestion;
 use chabanenk0\TestAssignmentBundle\Entity\Answer;
+use Acme\DemoBundle\Entity\TestAssignment;
+use Acme\DemoBundle\Entity\Tag;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class LoadTestData implements FixtureInterface
@@ -39,6 +41,16 @@ class LoadTestData implements FixtureInterface
             $b->addAnswer(new Answer("1", new ScaleScore($mainScale, 0)));
             $test->addQuestion($b);
             $manager->persist($test);
+            $TestAssignment1=new TestAssignment();
+            $TestAssignment1->setName($test->getTestName());
+            $TestAssignment1->setDescription($test->getTestDescription());
+            
+            $tag1=new Tag();
+            $tag1->setName("arithmetics");
+            $TestAssignment1->addTag($tag1);
+            $TestAssignment1->setTest($test);
+            $manager->persist($TestAssignment1);
+
             $manager->flush();
         }
     }

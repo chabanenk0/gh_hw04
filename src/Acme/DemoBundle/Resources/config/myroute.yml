@@ -31,3 +31,26 @@ _about:
 _testview:
     pattern: /testview/{id}
     defaults: { _controller: AcmeDemoBundle:My:testView }
+
+_guestbook:
+    pattern: /guestbook/
+    defaults: { _controller: AcmeDemoBundle:Post:index }
+
+_guestbook_id:
+    pattern: /guestbook/{id}
+    defaults: { _controller: AcmeDemoBundle:Post:index }
+
+
+_postview:
+    pattern:  /postview/{id}
+    defaults: { _controller: AcmeDemoBundle:Post:view }
+
+
+_postdelete:
+    pattern:  /postdelete/{id}
+    defaults: { _controller: AcmeDemoBundle:Post:delete }
+
+
+_tagsview:
+    pattern:  /tests/{id}
+    defaults: { _controller: AcmeDemoBundle:My:tests }

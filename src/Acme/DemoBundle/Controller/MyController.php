@@ -61,7 +61,7 @@ class MyController extends Controller
     public function testsAction()
     {
         $testsArray = $this->getDoctrine()
-            ->getRepository('chabanenk0TestAssignmentBundle:Test')
+            ->getRepository('AcmeDemoBundle:TestAssignment')
             ->findAll();
 
         if (!$testsArray) {
@@ -80,4 +80,32 @@ class MyController extends Controller
         ));
     }
 
+    public function latestTestsAction()
+    {
+        $testsArray = $this->getDoctrine()
+            ->getRepository('chabanenk0TestAssignmentBundle:Test')
+            ->findAll();
+
+        if (!$testsArray) {
+            throw $this->createNotFoundException(
+                'No test record found  '
+            );
+        }
+
+        return $this->render('AcmeDemoBundle:My:testLinksList.html.twig',array('tests'=>$testsArray));
+    }
+    public function popularTestsAction()
+    {
+        $testsArray = $this->getDoctrine()
+            ->getRepository('chabanenk0TestAssignmentBundle:Test')
+            ->findAll();
+
+        if (!$testsArray) {
+            throw $this->createNotFoundException(
+                'No test record found  '
+            );
+        }
+
+        return $this->render('AcmeDemoBundle:My:testLinksList.html.twig',array('tests'=>$testsArray));
+    }
 }

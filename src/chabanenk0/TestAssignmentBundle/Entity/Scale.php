@@ -9,6 +9,8 @@
  */
 
 namespace chabanenk0\TestAssignmentBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -47,11 +49,15 @@ class Scale
      **/
     protected $testId;
 
-    public function __construct(Scale $scale)
+    public function __construct(Scale $scale = null)
     {
-        $this->setName($scale->getName());
-        $this->setScore($scale->getScore());
-        $this->scaleScores=$scale->scaleScores;
+        if ($scale) {
+            $this->setName($scale->getName());
+            $this->setScore($scale->getScore());
+            $this->scaleScores=$scale->scaleScores;
+        }
+        else
+            $this->scaleScores=new ArrayCollection();
     }
 
     /**

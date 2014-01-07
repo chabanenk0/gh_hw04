@@ -1,0 +1,7 @@
+<ul>
+        {%  for tag in tags %}
+                <li>
+                <a href="{{path('_tagsview',{'id': tag.id}) }}"> {{ tag.name |dotdotdot}}</a>
+                </li>
+   {%  endfor%}
+</ul>

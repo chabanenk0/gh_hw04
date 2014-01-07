@@ -5,18 +5,15 @@ namespace chabanenk0\TestAssignmentBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class TestType extends AbstractType
+class ScaleType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('testName', 'text');
-        $builder->add('testDescription', 'text');
-        $builder->add('scales', 'collection',array('type'=>'email'));
-        $builder->add('questions', 'collection');
+        $builder->add('name', 'text');
     }
 
     public function getName()
     {
-        return '_user_';
+        return '_scale_';
     }
 }
