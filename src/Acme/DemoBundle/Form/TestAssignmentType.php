@@ -18,6 +18,7 @@ class TestAssignmentType extends AbstractType
             'multiple'=>true,
             'empty_value'=>true,
             ));
+        $builder->add('image', 'file', array('required'=>false));
     }
 
     public function getName()

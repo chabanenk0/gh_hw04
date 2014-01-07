@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use chabanenk0\TestAssignmentBundle\Entity\Test;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -67,14 +68,18 @@ class TestAssignment
      */
     protected $dateTimeUploaded;
 
+    /**
+     * @Assert\File(maxSize="6000000")
+     * @ORM\Column(type="string", nullable=true)
+     */
+     protected $image;
+
+
     public function __construct()
     {
         $this->tags=new ArrayCollection();
         $this->visits = 0;
     }
-
-
-
 
     /**
      * @param mixed $description
@@ -188,5 +193,14 @@ class TestAssignment
         $this->visits=$this->visits+1;
     }
 
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image)
+    {
+        $this->image=$image;
+    }
 
 }

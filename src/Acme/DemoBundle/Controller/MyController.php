@@ -160,8 +160,18 @@ class MyController extends Controller
             $testObject->setTestName($test->getName());
             $testObject->setTestDescription($test->getDescription());
             $test->setTest($testObject);
+
             $em->persist($test);
             $em->flush();
+
+            if ($form['image']) {
+                $someNewFilename = $test->getId().".jpg";
+                $form['image']->getData()->move("./bundles/acmedemo/images/", $someNewFilename);
+                $test->setImage("./bundles/acmedemo/images/".$someNewFilename);
+                $em->persist($test);
+                $em->flush();
+            }
+
             return $this->redirect($this->generateUrl("_tests"));
         }
 

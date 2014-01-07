@@ -5,7 +5,7 @@
 {% block content %}
 <h1>Створення нового теста </h1>
 <p>Введіть назву та короткий опис теста, який Ви плануєте створити. Наступними діями Ви зможете додавати та редагувати питання та відповіді теста.</p>
-<form action="{{ path('_new_test_asmt') }}" method="post">
+<form action="{{ path('_new_test_asmt') }}" method="post" enctype="multipart/form-data">
     {{ form_widget(form) }}
     <input type="submit" />
 </form>
