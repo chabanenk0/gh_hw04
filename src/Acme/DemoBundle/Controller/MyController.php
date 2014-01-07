@@ -15,6 +15,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Acme\DemoBundle\Entity\TestAssignment;
 use chabanenk0\TestAssignmentBundle\Entity\Test;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 
 class MyController extends Controller
 {
@@ -61,7 +63,7 @@ class MyController extends Controller
         ));
     }
 
-    public function testsAction($id=-1)
+    public function testsAction($id=-1, $page =  null)
     {
         
         $em = $this->getDoctrine()->getManager();
@@ -78,18 +80,25 @@ class MyController extends Controller
             //$testsArray=$tag->getTests();
         }
         $query->setMaxResults(5);
-        $testsArray=$query->getResult();
+        //$testsArray=$query->getResult();
         //$testsArray = $this->getDoctrine()
             //->getRepository('AcmeDemoBundle:TestAssignment')
             //->findAll();
-
-        if (!$testsArray) {
-            throw $this->createNotFoundException(
-                'No test record found  '
-            );
+        $adapter = new DoctrineORMAdapter($query);
+        $pager =  new Pagerfanta($adapter);
+        $pager->setMaxPerPage(10);
+        if (!$page)    $page = 1;
+        try  {
+            $pager->setCurrentPage($page);
+        }
+        catch(NotValidCurrentPageException $e) {
+            throw new NotFoundHttpException('Illegal page');
         }
 
-        return $this->render('AcmeDemoBundle:My:tests.html.twig',array('tests'=>$testsArray));
+        return $this->render('AcmeDemoBundle:My:tests.html.twig',array(
+            //'tests'=>$testsArray,
+            'pager'=>$pager,
+            ));
     }
 
     public function testViewAction($id)

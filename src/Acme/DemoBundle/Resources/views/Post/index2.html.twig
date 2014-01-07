@@ -11,8 +11,11 @@
     {{ form_rest(form) }}
     {{ form_errors(form) }}
     </form>
+{% if pagination.haveToPaginate %}
+    {{ pagerfanta(pagination) }}
+{% endif %}
  
-{% for post in posts %}
+{% for post in pagination.currentPageResults %}
             <div class="thumbnail">
                 <div class="when-added">добавлено: {{ post.dateTimeUploaded.date }} </div>
                 <div class="caption">
@@ -23,6 +26,9 @@
                     <a href=' {{path('_postdelete',{'id':post.id}) }}'> удалить </a>
             </div>
 {% endfor %}
+{% if pagination.haveToPaginate %}
+    {{ pagerfanta(pagination) }}
+{% endif %}
 
 {% endblock %}
 

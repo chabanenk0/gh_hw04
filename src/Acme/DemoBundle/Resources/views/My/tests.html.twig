@@ -5,8 +5,11 @@
 {% block content %}
     <h1>Зараз доступні наступні тести:</h1>
     <h1>{{ 'Our tests' | trans(locale='ru') }}</h1>
+   {% if pager.haveToPaginate %}
+       {{ pagerfanta(pager) }}
+   {% endif %}
     
-        {%  for test in tests %}
+        {%  for test in pager.currentPageResults %}
             <div class="thumbnail">
                 <div class="when-added">добавлено: {{ test.dateTimeUploaded.date }} </div>
                 <div class="caption">
@@ -21,6 +24,9 @@
                 <a href="{{ path('_guestbook_id',{'id': test.id}) }}">Залишити відгук</a>
             </div>
    {%  endfor%}
+   {% if pager.haveToPaginate %}
+       {{ pagerfanta(pager) }}
+   {% endif %}
    <a href='{{path('_new_test_asmt')}}'>Створити новий тест</a>
 {% endblock %}
 

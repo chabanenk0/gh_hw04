@@ -7,11 +7,14 @@ use Acme\DemoBundle\Entity\Post;
 use Acme\DemoBundle\Form\PostType;
 use Symfony\Component\HttpFoundation\Request;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
+
 
 
 class PostController extends Controller
 {
-    public function indexAction(Request $request, $id=-1)
+    public function indexAction(Request $request, $id=-1, $page=null)
     {
         /*
          * The action's view can be rendered using render() method
@@ -46,9 +49,20 @@ class PostController extends Controller
             $query = $em->createQuery($dql);
         }
 
-        $query->setMaxResults(5);
+        //$query->setMaxResults(5);
+        $adapter = new DoctrineORMAdapter($query);
+        $pager =  new Pagerfanta($adapter);
+        $pager->setMaxPerPage(10);
+        if (!$page)    $page = 1;
+        try  {
+            $pager->setCurrentPage($page);
+        }
+        catch(NotValidCurrentPageException $e) {
+            throw new NotFoundHttpException('Illegal page');
+        }
 
-        $posts=$query->getResult();
+
+        //$posts=$query->getResult();
         
         //$limitPerPage =  $this->container->getParameter('knp_paginator.page_range');
     
@@ -67,8 +81,8 @@ class PostController extends Controller
         return $this->render('AcmeDemoBundle:Post:index2.html.twig',array(
             'entity' => $post,
             'form' => $guestForm->createView(),
-            'posts' => $posts//,
-            //'pagination' => $pagination
+            //'posts' => $posts,
+            'pagination' => $pager
         ));
     }
 
