@@ -35,9 +35,20 @@ class PostController extends Controller
             }
         }
 
-        $dql   = "SELECT a FROM AcmeDemoBundle:Post a";
-        $query = $em->createQuery($dql);
+        $test = $em->getRepository('AcmeDemoBundle:TestAssignment')->findOneById($id);
+        if ($test) {
+                $dql   = "SELECT a FROM AcmeDemoBundle:Post a where a.testReference = :test";
+                $query = $em->createQuery($dql);
+                $query->setParameter('test', $test);
+        }
+        else {
+            $dql   = "SELECT a FROM AcmeDemoBundle:Post a";
+            $query = $em->createQuery($dql);
+        }
 
+        $query->setMaxResults(5);
+
+        $posts=$query->getResult();
         
         //$limitPerPage =  $this->container->getParameter('knp_paginator.page_range');
     
@@ -51,7 +62,7 @@ class PostController extends Controller
         // parameters to template
         //return $this->render('AcmeMainBundle:Article:list.html.twig', array('pagination' => $pagination));
 
-        $posts = $em->getRepository('AcmeDemoBundle:Post')->findAll();
+        //$posts = $em->getRepository('AcmeDemoBundle:Post')->findAll();
 
         return $this->render('AcmeDemoBundle:Post:index2.html.twig',array(
             'entity' => $post,
@@ -60,4 +71,26 @@ class PostController extends Controller
             //'pagination' => $pagination
         ));
     }
+
+    public function latestPostsAction(Request $request, $id=-1)
+    {
+        /*
+         * The action's view can be rendered using render() method
+         * or @Template annotation as demonstrated in DemoController.
+         *
+         */
+        $em = $this->getDoctrine()->getManager();
+
+        $dql   = "SELECT a FROM AcmeDemoBundle:Post a  order by a.dateTimeUploaded desc";
+        $query = $em->createQuery($dql);
+
+        $query->setMaxResults(5);
+
+        $posts=$query->getResult();
+        
+        return $this->render('AcmeDemoBundle:Post:postList.html.twig',array(
+            'posts' => $posts,
+        ));
+    }
+
 }

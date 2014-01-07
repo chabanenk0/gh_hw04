@@ -5,13 +5,16 @@ namespace Acme\DemoBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Acme\DemoBundle\Form\ContactType;
+use Acme\DemoBundle\Form\TestAssignmentType;
 
 // these import the "@Route" and "@Template" annotations
 // using only yaml configuration
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Acme\DemoBundle\Entity\TestAssignment;
+use chabanenk0\TestAssignmentBundle\Entity\Test;
 
 class MyController extends Controller
 {
@@ -58,11 +61,27 @@ class MyController extends Controller
         ));
     }
 
-    public function testsAction()
+    public function testsAction($id=-1)
     {
-        $testsArray = $this->getDoctrine()
-            ->getRepository('AcmeDemoBundle:TestAssignment')
-            ->findAll();
+        
+        $em = $this->getDoctrine()->getManager();
+        $tag = $em->getRepository('AcmeDemoBundle:Tag')->findOneById($id);
+        if ($tag) {
+            $dql   = "SELECT t FROM AcmeDemoBundle:TestAssignment t where :tag member of t.tags";
+            $query = $em->createQuery($dql);
+            $query->setParameter('tag', $tag);
+
+        }
+        else {
+            $dql   = "SELECT a FROM AcmeDemoBundle:TestAssignment a";
+            $query = $em->createQuery($dql);
+            //$testsArray=$tag->getTests();
+        }
+        $query->setMaxResults(5);
+        $testsArray=$query->getResult();
+        //$testsArray = $this->getDoctrine()
+            //->getRepository('AcmeDemoBundle:TestAssignment')
+            //->findAll();
 
         if (!$testsArray) {
             throw $this->createNotFoundException(
@@ -75,16 +94,28 @@ class MyController extends Controller
 
     public function testViewAction($id)
     {
+        $em = $this->getDoctrine()->getManager();
+        $test = $em->getRepository('AcmeDemoBundle:TestAssignment')->findOneById($id);
+        $test->increaseVisits();
+        $testId=$test->getTestId();
+        $em->persist($test);
+        $em->flush();
+
+
         return $this->render('AcmeDemoBundle:My:testview.html.twig',array(
-            'id'=>$id,
+            'id'=>$testId,
         ));
     }
 
     public function latestTestsAction()
     {
-        $testsArray = $this->getDoctrine()
-            ->getRepository('chabanenk0TestAssignmentBundle:Test')
-            ->findAll();
+        $em = $this->getDoctrine()->getManager();
+        $dql   = "SELECT a FROM AcmeDemoBundle:TestAssignment a order by a.dateTimeUploaded desc";
+        $query = $em->createQuery($dql);
+            //$testsArray=$tag->getTests();
+        
+        $query->setMaxResults(5);
+        $testsArray=$query->getResult();
 
         if (!$testsArray) {
             throw $this->createNotFoundException(
@@ -96,9 +127,13 @@ class MyController extends Controller
     }
     public function popularTestsAction()
     {
-        $testsArray = $this->getDoctrine()
-            ->getRepository('chabanenk0TestAssignmentBundle:Test')
-            ->findAll();
+        $em = $this->getDoctrine()->getManager();
+        $dql   = "SELECT a FROM AcmeDemoBundle:TestAssignment a order by a.visits desc";
+        $query = $em->createQuery($dql);
+            //$testsArray=$tag->getTests();
+        
+        $query->setMaxResults(5);
+        $testsArray=$query->getResult();
 
         if (!$testsArray) {
             throw $this->createNotFoundException(
@@ -108,4 +143,29 @@ class MyController extends Controller
 
         return $this->render('AcmeDemoBundle:My:testLinksList.html.twig',array('tests'=>$testsArray));
     }
+
+    public function newTestAction(Request $request)
+    {
+        $test =  new TestAssignment();
+
+        $form = $this->CreateForm(new TestAssignmentType(), $test);
+
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // perform some action, such as saving the task to the database
+            $em =  $this->getDoctrine()->getManager();
+            $testObject = new Test();
+            $testObject->setTestName($test->getName());
+            $testObject->setTestDescription($test->getDescription());
+            $test->setTest($testObject);
+            $em->persist($test);
+            $em->flush();
+            return $this->redirect($this->generateUrl("_tests"));
+        }
+
+        return $this->render("AcmeDemoBundle:My:newtest.html.twig",array('form'=>$form->createView()));
+    }
+
 }

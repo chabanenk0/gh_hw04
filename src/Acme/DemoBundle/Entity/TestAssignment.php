@@ -45,15 +45,21 @@ class TestAssignment
     protected $tags;
 
     /**
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="testReference")
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="testReference",cascade="persist")
      */
     protected $posts;
 
     /**
-     * @ORM\OneToOne(targetEntity="chabanenk0\TestAssignmentBundle\Entity\Test")
+     * @ORM\OneToOne(targetEntity="chabanenk0\TestAssignmentBundle\Entity\Test", cascade="persist")
      * @ORM\JoinColumn(name="test_id", referencedColumnName="id")
      */
     protected $test;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $visits;
+
 
     /**
      * @ORM\Column(type="datetime")
@@ -64,6 +70,7 @@ class TestAssignment
     public function __construct()
     {
         $this->tags=new ArrayCollection();
+        $this->visits = 0;
     }
 
 
@@ -156,7 +163,7 @@ class TestAssignment
         return $this->test;
     }
 
-   public function getDateTime()
+   public function getDateTimeUploaded()
     {
         return $this->dateTimeUploaded;
     }
@@ -170,5 +177,16 @@ class TestAssignment
     {
         return $this->tags;
     }
+
+    public function getVisits()
+    {
+        return $this->visits;
+    }
+
+    public function increaseVisits()
+    {
+        $this->visits=$this->visits+1;
+    }
+
 
 }

@@ -29,7 +29,7 @@ _about:
     defaults: { _controller: AcmeDemoBundle:My:about }
 
 _testview:
-    pattern: /testview/{id}
+    pattern: /testview/{id}/
     defaults: { _controller: AcmeDemoBundle:My:testView }
 
 _guestbook:
@@ -54,3 +54,7 @@ _postdelete:
 _tagsview:
     pattern:  /tests/{id}
     defaults: { _controller: AcmeDemoBundle:My:tests }
+
+_new_test_asmt:
+    pattern:  /newtestasmt/
+    defaults: { _controller: AcmeDemoBundle:My:newTest }

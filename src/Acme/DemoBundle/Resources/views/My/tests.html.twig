@@ -8,10 +8,11 @@
     
         {%  for test in tests %}
             <div class="thumbnail">
+                <div class="when-added">добавлено: {{ test.dateTimeUploaded.date }} </div>
                 <div class="caption">
                     <h3>{{ test.testName }}</h3>
                     <p> {{ test.testDescription|dotdotdot(200) }}</p>
-                    <p><a href="{{path('_testview',{'id': test.testId}) }}" class="btn btn-primary" role="button">Пройти тест</a> </p>
+                    <p><a href="{{path('_testview',{'id': test.id}) }}" class="btn btn-primary" role="button">Пройти тест</a> </p>
                 </div>
                 tags:
                 {% for tag in test.tags %}
@@ -20,7 +21,7 @@
                 <a href="{{ path('_guestbook_id',{'id': test.id}) }}">Залишити відгук</a>
             </div>
    {%  endfor%}
-   <a href='{{path('chabanenk0_test_assignment_newtest')}}'>Створити новий тест</a>
+   <a href='{{path('_new_test_asmt')}}'>Створити новий тест</a>
 {% endblock %}
 
 

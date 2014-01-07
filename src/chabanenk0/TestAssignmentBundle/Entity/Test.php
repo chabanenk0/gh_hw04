@@ -163,7 +163,7 @@ class Test
         $scaleScoresArray=new ArrayCollection();
         foreach ($scales as $scale) {
             $newScale=new Scale($scale);
-            $newScale->setTestId($this);
+            //$newScale->setTestId($this);
             $scaleScoresArray->add($newScale);
         }
         return array(
