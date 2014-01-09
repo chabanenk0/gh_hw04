@@ -15,7 +15,7 @@ before_script:
     - echo "127.0.0.1 testings.local" | sudo tee -a /etc/hosts
     - sudo /etc/init.d/apache2 restart
     - composer self-update
-    - composer install --dev --prefer-source
+    - composer install
     - chmod -R 777 ./
     - app/console do:da:cr -e=test > /dev/null
     - app/console do:sc:cr -e=test > /dev/null
@@ -24,6 +24,9 @@ before_script:
     - chmod -R 777 app/cache app/logs
     - "sh -e /etc/init.d/xvfb start"
     - "export DISPLAY=:99.0"
+    - "app/console doctrine:database:create"
+    - "app/console doctrine:schema:create"
+    - "app/console doctrine:fixtures:load"
     - sleep 5
 
 script:
