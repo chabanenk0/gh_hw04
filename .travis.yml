@@ -6,19 +6,10 @@ php:
   - 5.4
 
 before_script:
-    - chmod -R 777 ./
-    - composer self-update
     - composer install -n
-    - chmod -R 777 ./
-    - app/console do:da:cr -e=test > /dev/null
-    - app/console do:sc:cr -e=test > /dev/null
-    - chmod -R 777 app/cache app/logs
-    - app/console --env=test cache:warmup
-    - chmod -R 777 app/cache app/logs
-    - "export DISPLAY=:99.0"
-    - "app/console doctrine:database:create"
-    - "app/console doctrine:schema:create"
-    - "app/console doctrine:fixtures:load"
+    - app/console doctrine:database:create
+    - app/console doctrine:schema:create
+    - app/console doctrine:fixtures:load
     - sleep 5
 
 script:
