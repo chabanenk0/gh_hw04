@@ -6,6 +6,7 @@ php:
   - 5.4
 
 before_script:
+    - chmod -R 777 ./
     - composer self-update
     - composer install
     - chmod -R 777 ./
