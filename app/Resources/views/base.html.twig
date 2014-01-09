@@ -21,7 +21,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ path('_tests') }}">Наші тести</a></li>
+                    <li><a href="{{ path('_tests',{'id':-1, 'page':1}) }}">Наші тести</a></li>
                     <li><a href="{{ path('_about') }}">Про нас</a></li>
                     <li><a href="{{ path('_contacts') }}">Контакти</a></li>
                     <li><a href="{{ path('_guestbook') }}">Гостьова книга</a></li>
@@ -92,6 +92,7 @@
         <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
     {% endblock javascripts %}
+    
 
     </body>
 </html>

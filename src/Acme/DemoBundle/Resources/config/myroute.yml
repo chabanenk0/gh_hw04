@@ -15,11 +15,6 @@ _third:
     pattern: /third/
     defaults: { _controller: AcmeDemoBundle:My:third }
 
-
-_tests:
-    pattern: /tests/
-    defaults: { _controller: AcmeDemoBundle:My:tests }
-
 _contacts:
     pattern: /contacts/
     defaults: { _controller: AcmeDemoBundle:My:contacts }
@@ -51,10 +46,14 @@ _postdelete:
     defaults: { _controller: AcmeDemoBundle:Post:delete }
 
 
-_tagsview:
-    pattern:  /tests/{id}
-    defaults: { _controller: AcmeDemoBundle:My:tests }
+_tests:
+    pattern:  /tests/{id}/{page}
+    defaults: { _controller: AcmeDemoBundle:My:tests, page: 1 }
 
 _new_test_asmt:
     pattern:  /newtestasmt/
     defaults: { _controller: AcmeDemoBundle:My:newTest }
+
+_tests_pager:
+    pattern:  /tests_pager/{id}/{page}
+    defaults: { _controller: AcmeDemoBundle:My:testsPager, id: -1, page: 1 }

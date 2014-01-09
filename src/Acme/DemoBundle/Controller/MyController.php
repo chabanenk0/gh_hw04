@@ -79,7 +79,7 @@ class MyController extends Controller
             $query = $em->createQuery($dql);
             //$testsArray=$tag->getTests();
         }
-        $query->setMaxResults(5);
+        //$query->setMaxResults(5);
         //$testsArray=$query->getResult();
         //$testsArray = $this->getDoctrine()
             //->getRepository('AcmeDemoBundle:TestAssignment')
@@ -94,10 +94,59 @@ class MyController extends Controller
         catch(NotValidCurrentPageException $e) {
             throw new NotFoundHttpException('Illegal page');
         }
+        if ($pager->hasNextPage()) {
+            $nexPageNumber=$page + 1;
+        }
+        else $nexPageNumber=null;
 
         return $this->render('AcmeDemoBundle:My:tests.html.twig',array(
             //'tests'=>$testsArray,
             'pager'=>$pager,
+            'nextpage'=>$nexPageNumber,
+            ));
+    }
+
+    public function testsPagerAction($id=-1, $page =  null)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $tag = $em->getRepository('AcmeDemoBundle:Tag')->findOneById($id);
+        if ($tag) {
+            $dql   = "SELECT t FROM AcmeDemoBundle:TestAssignment t where :tag member of t.tags";
+            $query = $em->createQuery($dql);
+            $query->setParameter('tag', $tag);
+
+        }
+        else {
+            $dql   = "SELECT a FROM AcmeDemoBundle:TestAssignment a";
+            $query = $em->createQuery($dql);
+            //$testsArray=$tag->getTests();
+        }
+        //$query->setMaxResults(5);
+        //$testsArray=$query->getResult();
+        //$testsArray = $this->getDoctrine()
+            //->getRepository('AcmeDemoBundle:TestAssignment')
+            //->findAll();
+        
+        $adapter = new DoctrineORMAdapter($query);
+        $pager =  new Pagerfanta($adapter);
+        $pager->setMaxPerPage(10);
+        if (!$page)    $page = 1;
+        try  {
+            $pager->setCurrentPage($page);
+        }
+        catch(NotValidCurrentPageException $e) {
+            throw new NotFoundHttpException('Illegal page');
+        }
+        
+        if ($pager->hasNextPage()) {
+            $nexPageNumber=$page + 1;
+        }
+        else $nexPageNumber=null;
+
+        return $this->render('AcmeDemoBundle:My:tests_pager.html.twig',array(
+            //'tests'=>$testsArray,
+            'pager'=>$pager,
+            'nextpage'=>$nexPageNumber,
             ));
     }
 

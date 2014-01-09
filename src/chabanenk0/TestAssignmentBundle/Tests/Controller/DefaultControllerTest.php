@@ -19,8 +19,8 @@ class DefaultControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/tests');
-        $crawler = $client->followRedirect();
+        $crawler = $client->request('GET', '/tests/-1/1');
+        //$crawler = $client->followRedirect();
 
         $this->assertTrue($crawler->filter('html:contains("Зараз доступні наступні тести:")')->count() > 0);
 
@@ -35,8 +35,8 @@ class DefaultControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/tests');
-        $crawler = $client->followRedirect();
+        $crawler = $client->request('GET', '/tests/-1/1');
+        //$crawler = $client->followRedirect();
 
         $link = $crawler->filter('a:contains("Пройти тест")')->eq(1)->link();
         $crawler1 = $client->click($link);
@@ -92,8 +92,8 @@ class DefaultControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/tests');
-        $crawler = $client->followRedirect();
+        $crawler = $client->request('GET', '/tests/-1/1');
+        //$crawler = $client->followRedirect();
 
         $link = $crawler->filter('a:contains("psychology")')->eq(1)->link();
         $crawler1 = $client->click($link);
@@ -101,22 +101,22 @@ class DefaultControllerTest extends WebTestCase
         // !!! would work if you use default fixtures without any corrections!!!
 
         $this->assertTrue($crawler1->filter('html:contains("Тест темперамента Айзенка")')->count() > 0);
-        //$this->assertFalse($crawler1->filter('html:contains("Арифметический тест")')->count() > 0);
+        $this->assertFalse($crawler1->filter('html:contains("Арифметический тест")')->count() > 0);
     }
 
     public function testTags2() 
     {
         $client = static::createClient();
 
-        $client->request('GET', '/tests');
-        $crawler = $client->followRedirect();
+        $crawler = $client->request('GET', '/tests/-1/1');
+        //$crawler = $client->followRedirect();
 
         $link = $crawler->filter('a:contains("arithmetics")')->eq(1)->link();
         $crawler1 = $client->click($link);
 
         // !!! would work if you use default fixtures without any corrections!!!
 
-        //$this->assertFalse($crawler1->filter('html:contains("Тест темперамента Айзенка")')->count() > 0);
+        $this->assertFalse($crawler1->filter('html:contains("Тест темперамента Айзенка")')->count() > 0);
         $this->assertTrue($crawler1->filter('html:contains("Арифметический тест")')->count() > 0);
     }
 

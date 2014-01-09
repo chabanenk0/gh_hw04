@@ -2,13 +2,14 @@
 
 {% block title "Список тестов " %}
 
+
 {% block content %}
     <h1>Зараз доступні наступні тести:</h1>
-    <h1>{{ 'Our tests' | trans(locale='ru') }}</h1>
    {% if pager.haveToPaginate %}
        {{ pagerfanta(pager) }}
    {% endif %}
-    
+
+      <div id="updates">
         {%  for test in pager.currentPageResults %}
             <div class="thumbnail">
                 <div class="when-added">добавлено: {{ test.dateTimeUploaded.date }} </div>
@@ -19,16 +20,54 @@
                 </div>
                 tags:
                 {% for tag in test.tags %}
-                   <a href='{{ path('_tagsview',{'id': tag.id}) }}'>{{ tag.name }}</a>,
+                   <a href='{{ path('_tests',{'id': tag.id}) }}'>{{ tag.name }}</a>,
                 {% endfor%}
                 <a href="{{ path('_guestbook_id',{'id': test.id}) }}">Залишити відгук</a>
             </div>
+        
    {%  endfor%}
-   {% if pager.haveToPaginate %}
-       {{ pagerfanta(pager) }}
-   {% endif %}
+            <div id="more{{nextpage}}" class="morebox">
+            <a href="#" class="more" id="{{nextpage}}">more</a>
+            </div>
+        </div>
+
    <a href='{{path('_new_test_asmt')}}'>Створити новий тест</a>
 {% endblock %}
+
+    {% block javascripts %}
+        {% javascripts '@jquery_js' '@bootstrap_js' filter='?yui_js' combine=true %}
+        <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+        <script type="text/javascript">
+$(function() {
+//More Button
+$('.more').on("click",function() {
+    var ID = $('.more').attr("id");
+    if(ID)
+    {
+        $("#more"+ID).html('<img src="/web/acmedemo/images/spinner3-genuine.gif" />');
+        $.ajax({
+            type: "POST",
+            url: "/tests_pager/-1/"+ ID,
+            data: "lastmsg="+ ID, 
+            cache: false,
+            success: function(html){
+                $("#updates").append(html);
+                $("#more"+ID).remove();
+            }
+        });
+    }
+    else {
+    $(".morebox").html('The End');
+    }
+return false;
+});
+});
+
+</script>
+
+    {% endblock javascripts %}
 
 
 {% set code = code(_self) %}

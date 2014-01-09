@@ -1,0 +1,49 @@
+        <script type="text/javascript">
+$(function() {
+//More Button
+$('.more').on("click",function() {
+    var ID = $('.more').attr("id");
+    if(ID)
+    {
+        $("#more"+ID).html('<img src="/web/acmedemo/images/spinner3-genuine.gif" />');
+        $.ajax({
+            type: "POST",
+            url: "/tests_pager/-1/"+ ID,
+            data: "lastmsg="+ ID, 
+            cache: false,
+            success: function(html){
+                $("#updates").append(html);
+                $("#more"+ID).remove();
+            }
+        });
+    }
+    else {
+    $(".morebox").html('The End');
+    }
+return false;
+});
+});
+
+</script>
+
+        {%  for test in pager.currentPageResults %}
+            <div class="thumbnail">
+                <div class="when-added">добавлено: {{ test.dateTimeUploaded.date }} </div>
+                <div class="caption">
+                    <h3>{{ test.testName }}</h3>
+                    <p> {{ test.testDescription|dotdotdot(200) }}</p>
+                    <p><a href="{{path('_testview',{'id': test.id}) }}" class="btn btn-primary" role="button">Пройти тест</a> </p>
+                </div>
+                tags:
+                {% for tag in test.tags %}
+                   <a href='{{ path('_tests',{'id': tag.id}) }}'>{{ tag.name }}</a>,
+                {% endfor%}
+                <a href="{{ path('_guestbook_id',{'id': test.id}) }}">Залишити відгук</a>
+            </div>
+   {%  endfor%}
+{% if nextpage is not null %}
+<div id="more{{nextpage}}" class="morebox">
+<a href="#" class="more" id="{{nextpage}}">more</a>
+</div>
+{% endif %}
+
