@@ -1,0 +1,30 @@
+multicasetestquestion:
+    pattern:  /
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:MultiCaseTestQuestion:index" }
+
+multicasetestquestion_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:MultiCaseTestQuestion:show" }
+
+multicasetestquestion_new:
+    pattern:  /new/{testid}
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:MultiCaseTestQuestion:new", testid: null }
+
+multicasetestquestion_create:
+    pattern:  /create
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:MultiCaseTestQuestion:create" }
+    requirements: { _method: post }
+
+multicasetestquestion_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:MultiCaseTestQuestion:edit" }
+
+multicasetestquestion_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:MultiCaseTestQuestion:update" }
+    requirements: { _method: post|put }
+
+multicasetestquestion_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:MultiCaseTestQuestion:delete" }
+    requirements: { _method: post|delete }

@@ -220,4 +220,9 @@ class Test
         }
     }
 
+    public function __toString()
+    {
+        return $this->testName;
+    }
+
 }

@@ -52,7 +52,7 @@ class PostController extends Controller
         //$query->setMaxResults(5);
         $adapter = new DoctrineORMAdapter($query);
         $pager =  new Pagerfanta($adapter);
-        $pager->setMaxPerPage(10);
+        $pager->setMaxPerPage(5);
         if (!$page)    $page = 1;
         try  {
             $pager->setCurrentPage($page);
@@ -60,6 +60,12 @@ class PostController extends Controller
         catch(NotValidCurrentPageException $e) {
             throw new NotFoundHttpException('Illegal page');
         }
+
+        if ($pager->hasNextPage()) {
+            $nexPageNumber=$page + 1;
+        }
+        else $nexPageNumber=null;
+
 
 
         //$posts=$query->getResult();
@@ -82,7 +88,8 @@ class PostController extends Controller
             'entity' => $post,
             'form' => $guestForm->createView(),
             //'posts' => $posts,
-            'pagination' => $pager
+            'pagination' => $pager,
+            'nextpage' => $nexPageNumber,
         ));
     }
 
@@ -107,4 +114,63 @@ class PostController extends Controller
         ));
     }
 
+    public function postsPagerAction(Request $request, $id=-1, $page=null)
+    {
+        /*
+         * The action's view can be rendered using render() method
+         * or @Template annotation as demonstrated in DemoController.
+         *
+         */
+
+        $em = $this->getDoctrine()->getManager();
+ 
+        $test = $em->getRepository('AcmeDemoBundle:TestAssignment')->findOneById($id);
+        if ($test) {
+                $dql   = "SELECT a FROM AcmeDemoBundle:Post a where a.testReference = :test";
+                $query = $em->createQuery($dql);
+                $query->setParameter('test', $test);
+        }
+        else {
+            $dql   = "SELECT a FROM AcmeDemoBundle:Post a";
+            $query = $em->createQuery($dql);
+        }
+
+        //$query->setMaxResults(5);
+        $adapter = new DoctrineORMAdapter($query);
+        $pager =  new Pagerfanta($adapter);
+        $pager->setMaxPerPage(5);
+        if (!$page)    $page = 1;
+        try  {
+            $pager->setCurrentPage($page);
+        }
+        catch(NotValidCurrentPageException $e) {
+            throw new NotFoundHttpException('Illegal page');
+        }
+        if ($pager->hasNextPage()) {
+            $nexPageNumber=$page + 1;
+        }
+        else $nexPageNumber=null;
+
+        //$posts=$query->getResult();
+        
+        //$limitPerPage =  $this->container->getParameter('knp_paginator.page_range');
+    
+        //$paginator  = $this->get('knp_paginator');
+        //$pagination = $paginator->paginate(
+        //    $query,
+        //    $this->get('request')->query->get('page', 1)/*page number*/,
+        //    $limitPerPage/*limit per page*/
+        //);
+
+        // parameters to template
+        //return $this->render('AcmeMainBundle:Article:list.html.twig', array('pagination' => $pagination));
+
+        //$posts = $em->getRepository('AcmeDemoBundle:Post')->findAll();
+
+        return $this->render('AcmeDemoBundle:Post:posts_pager.html.twig',array(
+            //'posts' => $posts,
+            'pagination' => $pager,
+            'nextpage' => $nexPageNumber,
+        ));
+    }
 }

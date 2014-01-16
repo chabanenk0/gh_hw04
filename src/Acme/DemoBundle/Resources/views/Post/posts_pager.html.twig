@@ -1,0 +1,45 @@
+        <script type="text/javascript">
+$(function() {
+//More Button
+$('.more').on("click",function() {
+    var ID = $('.more').attr("id");
+    if(ID)
+    {
+        $("#more"+ID).html('<img src="/web/acmedemo/images/spinner3-genuine.gif" />');
+        $.ajax({
+            type: "POST",
+            url: "/posts_pager/-1/"+ ID,
+            data: "lastmsg="+ ID, 
+            cache: false,
+            success: function(html){
+                $("#updates").append(html);
+                $("#more"+ID).remove();
+            }
+        });
+    }
+    else {
+    $(".morebox").html('The End');
+    }
+return false;
+});
+});
+
+</script>
+ 
+{% for post in pagination.currentPageResults %}
+            <div class="thumbnail">
+                <div class="when-added">добавлено: {{ post.dateTimeUploaded.date }} </div>
+                <div class="caption">
+                    <h4>Відгук від {{ post.name }} ({{post.email}})</h4>
+                    <p>{{ post.message | dotdotdot(100)}} </p>
+                </div>
+                    <a href=' {{path('_postview',{'id':post.id}) }}'>просмотреть</a>
+                    <a href=' {{path('_postdelete',{'id':post.id}) }}'> удалить </a>
+            </div>
+{% endfor %}
+{% if nextpage is not null %}
+<div id="more{{nextpage}}" class="morebox">
+<a href="#" class="more" id="{{nextpage}}">more</a>
+</div>
+{% endif %}
+

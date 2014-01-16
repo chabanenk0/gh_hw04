@@ -1,0 +1,30 @@
+scalescore:
+    pattern:  /
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:ScaleScore:index" }
+
+scalescore_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:ScaleScore:show" }
+
+scalescore_new:
+    pattern:  /new
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:ScaleScore:new" }
+
+scalescore_create:
+    pattern:  /create
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:ScaleScore:create" }
+    requirements: { _method: post }
+
+scalescore_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:ScaleScore:edit" }
+
+scalescore_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:ScaleScore:update" }
+    requirements: { _method: post|put }
+
+scalescore_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:ScaleScore:delete" }
+    requirements: { _method: post|delete }
