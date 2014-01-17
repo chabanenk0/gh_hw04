@@ -103,6 +103,7 @@ class MyController extends Controller
             //'tests'=>$testsArray,
             'pager'=>$pager,
             'nextpage'=>$nexPageNumber,
+            'tagId'=>$id,
             ));
     }
 
@@ -147,6 +148,7 @@ class MyController extends Controller
             //'tests'=>$testsArray,
             'pager'=>$pager,
             'nextpage'=>$nexPageNumber,
+            'tagId'=>$id,
             ));
     }
 

@@ -8,7 +8,7 @@ $('.more').on("click",function() {
         $("#more"+ID).html('<img src="/web/acmedemo/images/spinner3-genuine.gif" />');
         $.ajax({
             type: "POST",
-            url: "/tests_pager/-1/"+ ID,
+            url: "{{path('_tests_pager', {'id': tagId})}}/"+ ID,
             data: "lastmsg="+ ID, 
             cache: false,
             success: function(html){

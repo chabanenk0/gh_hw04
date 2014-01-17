@@ -52,7 +52,7 @@ _postdelete:
 
 _tests:
     pattern:  /tests/{id}/{page}
-    defaults: { _controller: AcmeDemoBundle:My:tests, page: 1, id: -1 }
+    defaults: { _controller: AcmeDemoBundle:My:tests, page: 1 }
 
 _new_test_asmt:
     pattern:  /newtestasmt/
@@ -60,4 +60,4 @@ _new_test_asmt:
 
 _tests_pager:
     pattern:  /tests_pager/{id}/{page}
-    defaults: { _controller: AcmeDemoBundle:My:testsPager, id: -1, page: 1 }
+    defaults: { _controller: AcmeDemoBundle:My:testsPager, page: 1 }
