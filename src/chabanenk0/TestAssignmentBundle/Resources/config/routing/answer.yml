@@ -1,0 +1,30 @@
+answer:
+    pattern:  /
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:Answer:index" }
+
+answer_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:Answer:show" }
+
+answer_new:
+    pattern:  /new/{questionid}
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:Answer:new", questionid: null }
+
+answer_create:
+    pattern:  /create
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:Answer:create" }
+    requirements: { _method: post }
+
+answer_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:Answer:edit" }
+
+answer_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:Answer:update" }
+    requirements: { _method: post|put }
+
+answer_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:Answer:delete" }
+    requirements: { _method: post|delete }

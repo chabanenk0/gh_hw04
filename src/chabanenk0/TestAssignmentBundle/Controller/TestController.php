@@ -13,7 +13,7 @@ use chabanenk0\TestAssignmentBundle\Form\TestType;
 use Symfony\Component\HttpFoundation\Request;
 use chabanenk0\TestAssignmentBundle\Entity\OpenEvent;
 
-class DefaultController extends Controller
+class TestController extends Controller
 {
     public function indexAction(Request $request)
     {
@@ -109,5 +109,21 @@ class DefaultController extends Controller
 
         return $this->render("chabanenk0TestAssignmentBundle:Default:newtest.html.twig",array('form'=>$form->createView()));
     }
+
+    public function editTestAction(Request $request, $id)
+    {
+        $testClass = $this->getDoctrine()
+            ->getRepository('chabanenk0TestAssignmentBundle:Test')
+            ->findOneById($id);
+
+        if (!$testClass) {
+            throw $this->createNotFoundException(
+                'No test record found  '
+            );
+        }
+
+        return $this->render("chabanenk0TestAssignmentBundle:Default:edit_test.html.twig",array('test'=>$testClass, 'id'=>$id));
+    }
+
 
 }

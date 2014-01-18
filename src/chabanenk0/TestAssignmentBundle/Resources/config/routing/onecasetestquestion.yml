@@ -1,0 +1,30 @@
+onecasetestquestion:
+    pattern:  /
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:OneCaseTestQuestion:index" }
+
+onecasetestquestion_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:OneCaseTestQuestion:show" }
+
+onecasetestquestion_new:
+    pattern:  /new/{testid}
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:OneCaseTestQuestion:new", testid: null }
+
+onecasetestquestion_create:
+    pattern:  /create
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:OneCaseTestQuestion:create" }
+    requirements: { _method: post }
+
+onecasetestquestion_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:OneCaseTestQuestion:edit" }
+
+onecasetestquestion_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:OneCaseTestQuestion:update" }
+    requirements: { _method: post|put }
+
+onecasetestquestion_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "chabanenk0TestAssignmentBundle:OneCaseTestQuestion:delete" }
+    requirements: { _method: post|delete }

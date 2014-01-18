@@ -1,11 +1,36 @@
 chabanenk0_test_assignment_homepage:
     pattern:  /test/{id}
-    defaults: { _controller: chabanenk0TestAssignmentBundle:Default:index }
+    defaults: { _controller: chabanenk0TestAssignmentBundle:Test:index }
 
 chabanenk0_test_assignment_newuser:
     pattern:  /newuser/
-    defaults: { _controller: chabanenk0TestAssignmentBundle:Default:newUser }
+    defaults: { _controller: chabanenk0TestAssignmentBundle:Test:newUser }
 
 chabanenk0_test_assignment_newtest:
     pattern:  /newtest/
-    defaults: { _controller: chabanenk0TestAssignmentBundle:Default:newTest }
+    defaults: { _controller: chabanenk0TestAssignmentBundle:Test:newTest }
+
+chabanenk0_test_assignment_edit_test:
+    pattern:  /edittest/{id}
+    defaults: { _controller: chabanenk0TestAssignmentBundle:Test:editTest }
+
+chabanenk0_test_assignment_scale:
+    resource: "@chabanenk0TestAssignmentBundle/Controller/ScaleController.php"
+    type: annotation
+
+
+chabanenk0TestAssignmentBundle_scalescoore:
+    resource: @chabanenk0TestAssignmentBundle/Resources/config/routing/scalescore.yml
+    prefix:  /scalescore
+
+chabanenk0TestAssignmentBundle_answer:
+    resource: @chabanenk0TestAssignmentBundle/Resources/config/routing/answer.yml
+    prefix:  /answer
+
+chabanenk0TestAssignmentBundle_onecasetestquestion:
+        resource: "@chabanenk0TestAssignmentBundle/Resources/config/routing/onecasetestquestion.yml"
+        prefix:   /onecasetestquestion
+
+chabanenk0TestAssignmentBundle_multicasetestquestion:
+        resource: "@chabanenk0TestAssignmentBundle/Resources/config/routing/multicasetestquestion.yml"
+        prefix:   /multicasetestquestion

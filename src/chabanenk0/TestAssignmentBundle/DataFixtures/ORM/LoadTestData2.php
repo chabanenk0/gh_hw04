@@ -11,6 +11,8 @@ use chabanenk0\TestAssignmentBundle\Entity\OneCaseTestQuestion;
 use chabanenk0\TestAssignmentBundle\Entity\MultiCaseTestQuestion;
 use chabanenk0\TestAssignmentBundle\Entity\Answer;
 use Doctrine\Common\Collections\ArrayCollection;
+use Acme\DemoBundle\Entity\TestAssignment;
+use Acme\DemoBundle\Entity\Tag;
 
 class LoadTestData2 implements FixtureInterface
     {
@@ -48,6 +50,17 @@ class LoadTestData2 implements FixtureInterface
 				$a->addAnswer($noAnswer);				
 				$test->addQuestion($a);
 			}
+
+            $TestAssignment1=new TestAssignment();
+            $TestAssignment1->setName($test->getTestName());
+            $TestAssignment1->setDescription($test->getTestDescription());
+            
+            $tag1=new Tag();
+            $tag1->setName("psychology");
+            $TestAssignment1->addTag($tag1);
+            $TestAssignment1->setTest($test);
+            $manager->persist($TestAssignment1);
+
 
             $manager->persist($test);
             $manager->flush();

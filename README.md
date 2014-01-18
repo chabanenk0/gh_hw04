@@ -1,4 +1,5 @@
-GeekHub experience (TestAssignmentBundle for performing quizzes)
+GeekHub experience (TestAssignmentBundle for performing quizzes)[![Build Status](https://travis-ci.org/chabanenk0/gh_hw04.png?branch= guestbook-blog-feature)](https://travis-ci.org/chabanenk0/gh_hw04)
+========================
 
 This project contains a bundle for a quiz.
 Every quiz have a number of questions, each have answers. 

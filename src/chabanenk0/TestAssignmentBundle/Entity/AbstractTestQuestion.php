@@ -191,4 +191,9 @@ abstract class AbstractTestQuestion implements AskableInterface
     {
         return $this->answers;
     }
+
+    public function __toString()
+    {
+        return $this->question;
+    }
 }

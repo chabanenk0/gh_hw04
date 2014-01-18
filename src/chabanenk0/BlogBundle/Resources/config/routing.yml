@@ -1,0 +1,20 @@
+chabanenk0_blog_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: chabanenk0BlogBundle:Default:index }
+
+_tests:
+    pattern:  /tests/{id}/{page}
+    defaults: { _controller: chabanenk0BlogBundle:TestAssignment:tests, page: 1 }
+
+_new_test_asmt:
+    pattern:  /newtestasmt/
+    defaults: { _controller: chabanenk0BlogBundle:TestAssignment:newTest }
+
+_tests_pager:
+    pattern:  /tests_pager/{id}/{page}
+    defaults: { _controller: chabanenk0BlogBundle:TestAssignment:testsPager, page: 1 }
+
+_testview:
+    pattern: /testview/{id}/
+    defaults: { _controller: chabanenk0BlogBundle:TestAssignment:testView }
+

@@ -11,7 +11,8 @@ class TestType extends AbstractType
     {
         $builder->add('testName', 'text');
         $builder->add('testDescription', 'text');
-        $builder->add('scales', 'collection');
+        $builder->add('scales', 'entity');
+        $builder->add('questions', 'entity');
     }
 
     public function getName()

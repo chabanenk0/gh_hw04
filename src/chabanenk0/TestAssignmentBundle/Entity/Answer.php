@@ -47,13 +47,19 @@ class Answer
      */
     protected $answerText;
 
-    public function __construct ($newAnswerText, $scaleScore)
+    public function __construct ($newAnswerText='', $scaleScore=null)
     {
         self::$totalAnswersNumber = self::$totalAnswersNumber + 1;
         $this->number = self::$totalAnswersNumber;
         $this->answerText=$newAnswerText;
-        $scaleScore->setAnswer($this);
-        $this->setScores(new ArrayCollection(array($scaleScore)));
+        if ($scaleScore) {
+            $scaleScore->setAnswer($this);
+            $this->setScores(new ArrayCollection(array($scaleScore)));
+        }
+        else {
+            $this->setScores(new ArrayCollection());
+        }
+
     }
 
     /**
@@ -77,10 +83,21 @@ class Answer
         return $this->answerText;
     }
 
+    public function getAnswerText ()
+    {
+        return $this->answerText;
+    }
+
     public function setAnswer ($answerText)
     {
         $this->answerText=$answerText;
     }
+
+    public function setAnswerText ($answerText)
+    {
+        $this->answerText=$answerText;
+    }
+
 
     public function ask()
     {

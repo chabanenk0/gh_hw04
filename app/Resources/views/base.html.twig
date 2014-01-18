@@ -11,7 +11,7 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-inverse" role="navigation">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -21,9 +21,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ path('_tests') }}">Наші тести</a></li>
+                    <li><a href="{{ path('_tests',{'id':-1, 'page':1}) }}">Наші тести</a></li>
                     <li><a href="{{ path('_about') }}">Про нас</a></li>
                     <li><a href="{{ path('_contacts') }}">Контакти</a></li>
+                    <li><a href="{{ path('_guestbook') }}">Гостьова книга</a></li>
                 </ul>
             </div>
             <div class="collapse navbar-collapse">
@@ -42,22 +43,44 @@
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <!--<div class="jumbotron"> -->
-      <div class="container">
+    
+    <div class="container">
+     <div class="span9">
+        
         {% block body %}{% endblock %}
-        {% block content %}
+        <div class="row">
+          <div class="col-sm-6 col-md-4">
 
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg" role="button" href="/tests/">Пройти тест &raquo;</a></p>
-        {% endblock content %}
-      </div>
-    <!-- </div> -->
+          {% block content %}
+
+          <h1>Hello, world!</h1>
+          <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+          <p><a class="btn btn-primary btn-lg" role="button" href="/tests/">Пройти тест &raquo;</a></p>
+          {% endblock content %}
+          </div>
+        </div>
+
+     </div> <!-- class span9-->
+     <div class="row pull-right">
+        <div class="col-sm-6 col-md-4">
+
+            <h3> Останні тести:</h3>
+            {{ render(controller('AcmeDemoBundle:My:latestTests')) }}
+            <h3> Популярні тести:</h3>
+            {{ render(controller('AcmeDemoBundle:My:popularTests')) }}
+            <h3> Останні відгуки:</h3>
+            {{ render(controller('AcmeDemoBundle:Post:latestPosts')) }}
+            <h3> Теги:</h3>
+            {{ render(controller('AcmeDemoBundle:Tags:tags')) }}
+        </div>
+     </div> 
+    </div>
 
     <hr>
 
-      <footer>
-        <p>&copy; Chaban&cO 2013</p>
-      </footer>
+    <footer>
+        <p>&copy; Chaban&cO 2013-2014</p>
+    </footer>
     </div> <!-- /container -->
 
 
@@ -69,6 +92,7 @@
         <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
     {% endblock javascripts %}
+    
 
     </body>
 </html>

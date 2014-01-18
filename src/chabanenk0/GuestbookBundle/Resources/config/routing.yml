@@ -1,0 +1,25 @@
+chabanenk0_guestbook_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: chabanenk0GuestbookBundle:Default:index }
+
+_guestbook:
+    pattern: /guestbook/
+    defaults: { _controller: chabanenk0GuestbookBundle:Post:index }
+
+_guestbook_id:
+    pattern: /guestbook/{id}/{page}
+    defaults: { _controller: chabanenk0GuestbookBundle:Post:index, id: -1, page: 1 }
+
+_guestbook_pager_id:
+    pattern: /posts_pager/{id}/{page}
+    defaults: { _controller: chabanenk0GuestbookBundle:Post:postsPager, id: -1, page: 1 }
+
+
+_postview:
+    pattern:  /postview/{id}
+    defaults: { _controller: chabanenk0GuestbookBundle:Post:view }
+
+
+_postdelete:
+    pattern:  /postdelete/{id}
+    defaults: { _controller: chabanenk0GuestbookBundle:Post:delete }

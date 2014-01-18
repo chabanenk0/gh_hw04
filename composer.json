@@ -22,7 +22,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "twbs/bootstrap": "v2.3.2",
         "leafo/lessphp": "*",
-        "stof/doctrine-extensions-bundle": "~1.1@dev"
+        "stof/doctrine-extensions-bundle": "~1.1@dev",
+        "white-october/pagerfanta-bundle": "1.0.*@dev"
     },
     "scripts": {
         "post-install-cmd": [

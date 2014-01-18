@@ -1,0 +1,7 @@
+<ul>
+        {%  for test in tests %}
+                <li>
+                <a href="{{path('_testview',{'id': test.id}) }}"> {{ test.testName |dotdotdot(21)}}</a>
+                </li>
+   {%  endfor%}
+</ul>

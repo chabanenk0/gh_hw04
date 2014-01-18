@@ -1,0 +1,7 @@
+<ul>
+        {%  for post in posts %}
+                <li>
+                <a href="{{path('_postview',{'id': post.id}) }}"> {{ post.message |dotdotdot(10) }}</a>
+                </li>
+   {%  endfor%}
+</ul>

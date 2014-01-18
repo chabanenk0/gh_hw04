@@ -1,0 +1,23 @@
+{# 
+<p> Name: {{test.testName}} </p>
+<p> Description: {{test.testDescription}} </p>
+#}
+
+<p>Scales:
+{% for scale in test.scales %}
+  <p> scale: {{scale.name}} <a href="{{path('scale_edit', {'id': scale.id})}}">edit</a></p>
+{% endfor %}
+
+<p><a href="{{path('scale_new', {'testid': test.id})}}">Add one more scale</a></p>
+
+<p>Questions:</p>
+{% for question in test.questions %}
+ <p> question: {{question.question}} <a href="{{path('onecasetestquestion_edit', {'id': question.id})}}">edit</a></p>
+  {% for answer in question.answers %}
+  <p> Answer: {{answer.answer}} <a href="{{path('answer_edit', {'id': answer.id})}}">edit</a></p>
+  {% endfor %}
+  <p><a href="{{path('answer_new', {'questionid': question.id})}}">Add one more answer</a></p>
+{% endfor %}
+
+<p><a href="{{path('onecasetestquestion_new', {'testid': test.id})}}">Add one-case question</a></p>
+<p><a href="{{path('multicasetestquestion_new', {'testid': test.id})}}">Add multicase question</a></p>
