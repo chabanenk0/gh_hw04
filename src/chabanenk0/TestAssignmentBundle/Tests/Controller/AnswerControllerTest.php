@@ -21,7 +21,7 @@ class AnswerControllerTest extends WebTestCase
         $form = $crawler->selectButton('Create')->form(array(
             'chabanenk0_testassignmentbundle_answer[number]'  => 1,
             'chabanenk0_testassignmentbundle_answer[answerText]'  => 'What is Your name?',
-            'chabanenk0_testassignmentbundle_answer[questionID]'  => 509,
+            'chabanenk0_testassignmentbundle_answer[questionID]'  => 566,
             // ... other fields to fill
         ));
 

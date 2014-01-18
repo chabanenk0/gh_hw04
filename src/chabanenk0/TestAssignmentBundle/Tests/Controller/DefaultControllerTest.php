@@ -92,7 +92,7 @@ class DefaultControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/tests/-1/1');
+        $crawler = $client->request('GET', '/tests/13');
         //$crawler = $client->followRedirect();
 
         $link = $crawler->filter('a:contains("psychology")')->eq(1)->link();
@@ -100,15 +100,15 @@ class DefaultControllerTest extends WebTestCase
 
         // !!! would work if you use default fixtures without any corrections!!!
 
-        $this->assertTrue($crawler1->filter('html:contains("Тест темперамента Айзенка")')->count() > 0);
-        $this->assertFalse($crawler1->filter('html:contains("Арифметический тест")')->count() > 0);
+        $this->assertTrue($crawler1->filter('html:contains("Тест темперамента Айзенка (холерик")')->count() > 0);
+        $this->assertFalse($crawler1->filter('html:contains("Тест на проверку знаний таблицы умножения")')->count() > 0);
     }
 
     public function testTags2() 
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/tests/-1/1');
+        $crawler = $client->request('GET', '/tests/14');
         //$crawler = $client->followRedirect();
 
         $link = $crawler->filter('a:contains("arithmetics")')->eq(1)->link();
@@ -116,8 +116,8 @@ class DefaultControllerTest extends WebTestCase
 
         // !!! would work if you use default fixtures without any corrections!!!
 
-        $this->assertFalse($crawler1->filter('html:contains("Тест темперамента Айзенка")')->count() > 0);
-        $this->assertTrue($crawler1->filter('html:contains("Арифметический тест")')->count() > 0);
+        $this->assertFalse($crawler1->filter('html:contains("Тест темперамента Айзенка (холерик")')->count() > 0);
+        $this->assertTrue($crawler1->filter('html:contains("Тест на проверку знаний таблицы умножения")')->count() > 0);
     }
 
 

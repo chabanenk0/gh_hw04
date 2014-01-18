@@ -1,0 +1,19 @@
+{% extends "::base.html.twig" %}
+
+{% block title "Просмотр содержания теста " %}
+
+{% block content %}
+    <h1>Пройдіть тест № {{ id }}:</h1>
+    <div class="row">
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <div class="caption">
+                    <p> {{ render(controller('chabanenk0TestAssignmentBundle:Test:index', { 'id': id })) }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% set code = code(_self) %}

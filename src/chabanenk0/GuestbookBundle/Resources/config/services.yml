@@ -1,0 +1,7 @@
+parameters:
+#    chabanenk0_guestbook.example.class: chabanenk0\GuestbookBundle\Example
+
+services:
+#    chabanenk0_guestbook.example:
+#        class: %chabanenk0_guestbook.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

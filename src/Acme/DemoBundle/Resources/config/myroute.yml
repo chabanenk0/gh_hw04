@@ -23,41 +23,41 @@ _about:
     pattern: /about/
     defaults: { _controller: AcmeDemoBundle:My:about }
 
-_testview:
-    pattern: /testview/{id}/
-    defaults: { _controller: AcmeDemoBundle:My:testView }
+#_testview:
+#    pattern: /testview/{id}/
+#    defaults: { _controller: AcmeDemoBundle:My:testView }
 
-_guestbook:
-    pattern: /guestbook/
-    defaults: { _controller: AcmeDemoBundle:Post:index }
+#_guestbook:
+#    pattern: /guestbook/
+#    defaults: { _controller: AcmeDemoBundle:Post:index }
 
-_guestbook_id:
-    pattern: /guestbook/{id}/{page}
-    defaults: { _controller: AcmeDemoBundle:Post:index, id: -1, page: 1 }
+#_guestbook_id:
+#    pattern: /guestbook/{id}/{page}
+#    defaults: { _controller: AcmeDemoBundle:Post:index, id: -1, page: 1 }
 
-_guestbook_pager_id:
-    pattern: /posts_pager/{id}/{page}
-    defaults: { _controller: AcmeDemoBundle:Post:postsPager, id: -1, page: 1 }
-
-
-_postview:
-    pattern:  /postview/{id}
-    defaults: { _controller: AcmeDemoBundle:Post:view }
+#_guestbook_pager_id:
+#    pattern: /posts_pager/{id}/{page}
+#    defaults: { _controller: AcmeDemoBundle:Post:postsPager, id: -1, page: 1 }
 
 
-_postdelete:
-    pattern:  /postdelete/{id}
-    defaults: { _controller: AcmeDemoBundle:Post:delete }
+#_postview:
+#    pattern:  /postview/{id}
+#    defaults: { _controller: AcmeDemoBundle:Post:view }
 
 
-_tests:
-    pattern:  /tests/{id}/{page}
-    defaults: { _controller: AcmeDemoBundle:My:tests, page: 1 }
+#_postdelete:
+#    pattern:  /postdelete/{id}
+#    defaults: { _controller: AcmeDemoBundle:Post:delete }
 
-_new_test_asmt:
-    pattern:  /newtestasmt/
-    defaults: { _controller: AcmeDemoBundle:My:newTest }
 
-_tests_pager:
-    pattern:  /tests_pager/{id}/{page}
-    defaults: { _controller: AcmeDemoBundle:My:testsPager, page: 1 }
+#_tests:
+#    pattern:  /tests/{id}/{page}
+#    defaults: { _controller: AcmeDemoBundle:My:tests, page: 1 }
+
+#_new_test_asmt:
+#    pattern:  /newtestasmt/
+#    defaults: { _controller: AcmeDemoBundle:My:newTest }
+
+#_tests_pager:
+#    pattern:  /tests_pager/{id}/{page}
+#    defaults: { _controller: AcmeDemoBundle:My:testsPager, page: 1 }

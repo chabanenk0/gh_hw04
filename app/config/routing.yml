@@ -1,3 +1,11 @@
+chabanenk0_guestbook:
+    resource: "@chabanenk0GuestbookBundle/Resources/config/routing.yml"
+    prefix:   /
+
+chabanenk0_blog:
+    resource: "@chabanenk0BlogBundle/Resources/config/routing.yml"
+    prefix:   /
+
 chabanenk0_test_assignment:
     resource: "@chabanenk0TestAssignmentBundle/Resources/config/routing.yml"
     prefix:   /
