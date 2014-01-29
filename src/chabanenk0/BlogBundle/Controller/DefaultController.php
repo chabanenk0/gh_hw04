@@ -10,4 +10,11 @@ class DefaultController extends Controller
     {
         return $this->render('chabanenk0BlogBundle:Default:index.html.twig', array('name' => $name));
     }
+
+    public function indexPageAction()
+    {
+        return $this->render('chabanenk0BlogBundle:Default:indexPage.html.twig');
+    }
+
+
 }

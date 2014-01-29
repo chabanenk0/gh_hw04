@@ -1,3 +1,7 @@
+_index:
+    pattern: /
+    defaults: { _controller: chabanenk0BlogBundle:Default:indexPage }
+
 chabanenk0_blog_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: chabanenk0BlogBundle:Default:index }
@@ -17,4 +21,8 @@ _tests_pager:
 _testview:
     pattern: /testview/{id}/
     defaults: { _controller: chabanenk0BlogBundle:TestAssignment:testView }
+
+_blog_secured:
+    resource: "@chabanenk0BlogBundle/Controller/SecuredController.php"
+    type:     annotation
 

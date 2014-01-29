@@ -43,6 +43,9 @@ class TestAssignmentController extends Controller
     {
         
         $em = $this->getDoctrine()->getManager();
+
+        $user = $this->getUser();
+        
         $tag = $em->getRepository('chabanenk0BlogBundle:Tag')->findOneById($id);
         if ($tag) {
             $dql   = "SELECT t FROM chabanenk0BlogBundle:TestAssignment t where :tag member of t.tags";
@@ -80,6 +83,7 @@ class TestAssignmentController extends Controller
             'pager'=>$pager,
             'nextpage'=>$nexPageNumber,
             'tagId'=>$id,
+            'user'=>$user,
             ));
     }
 
